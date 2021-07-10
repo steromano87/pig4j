@@ -8,6 +8,11 @@ import com.twelvemonkeys.image.ResampleOp;
 import java.awt.image.BufferedImage;
 import java.awt.image.BufferedImageOp;
 
+/**
+ * Class that holds the scaling options used when merging two images together
+ *
+ * The option defines how an image with an arbitrary size is fitted on an existing canvas
+ */
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class ScalingOptions {
     @JsonProperty

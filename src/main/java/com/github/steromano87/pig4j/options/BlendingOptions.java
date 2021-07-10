@@ -9,6 +9,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
+/**
+ * Class that holds options used to blend two images together
+ */
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class BlendingOptions {
     @JsonProperty
@@ -29,6 +32,13 @@ public class BlendingOptions {
         return this;
     }
 
+    /**
+     * Blends two images together
+     *
+     * @param bgImage background image
+     * @param fgImage foreground image
+     * @return the blended image
+     */
     public BufferedImage apply(BufferedImage bgImage, BufferedImage fgImage) {
         boolean hasTransparency = bgImage.getColorModel().hasAlpha();
         int imageType = hasTransparency ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB;
@@ -60,6 +70,11 @@ public class BlendingOptions {
         return Objects.hash(alpha, method);
     }
 
+    /**
+     * Blending method used while joining images
+     *
+     * WIP: currently only the NORMAL method is implicitly used
+     */
     public enum Method {
         NORMAL,
         SUBTRACT
