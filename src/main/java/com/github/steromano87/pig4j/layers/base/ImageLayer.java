@@ -1,4 +1,4 @@
-package io.github.steromano87.pig4j.layers.base;
+package com.github.steromano87.pig4j.layers.base;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -6,10 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import io.github.steromano87.pig4j.exceptions.ImageReadingException;
-import io.github.steromano87.pig4j.layers.Layer;
-import io.github.steromano87.pig4j.options.BlendingOptions;
-import io.github.steromano87.pig4j.options.ScalingOptions;
+import com.github.steromano87.pig4j.exceptions.ImageReadingException;
+import com.github.steromano87.pig4j.options.BlendingOptions;
+import com.github.steromano87.pig4j.options.ScalingOptions;
+import com.github.steromano87.pig4j.layers.Layer;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

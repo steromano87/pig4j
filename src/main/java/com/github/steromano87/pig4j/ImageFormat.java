@@ -1,4 +1,4 @@
-package io.github.steromano87.pig4j;
+package com.github.steromano87.pig4j;
 
 public enum ImageFormat {
     BMP("bmp", "image/bmp"),

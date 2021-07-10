@@ -1,4 +1,4 @@
-package io.github.steromano87.pig4j.options;
+package com.github.steromano87.pig4j.options;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

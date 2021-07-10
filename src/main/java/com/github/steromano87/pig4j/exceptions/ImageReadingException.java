@@ -1,4 +1,4 @@
-package io.github.steromano87.pig4j.exceptions;
+package com.github.steromano87.pig4j.exceptions;
 
 public class ImageReadingException extends Pig4jException {
     public ImageReadingException() {

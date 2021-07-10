@@ -1,4 +1,4 @@
-package io.github.steromano87.pig4j.serialization;
+package com.github.steromano87.pig4j.serialization;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

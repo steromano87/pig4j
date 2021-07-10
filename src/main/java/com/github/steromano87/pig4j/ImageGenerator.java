@@ -1,4 +1,4 @@
-package io.github.steromano87.pig4j;
+package com.github.steromano87.pig4j;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,7 +15,7 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
-import io.github.steromano87.pig4j.layers.Layer;
+import com.github.steromano87.pig4j.layers.Layer;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

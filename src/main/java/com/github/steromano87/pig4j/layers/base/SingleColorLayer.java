@@ -1,13 +1,13 @@
-package io.github.steromano87.pig4j.layers.base;
+package com.github.steromano87.pig4j.layers.base;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import io.github.steromano87.pig4j.layers.Layer;
-import io.github.steromano87.pig4j.options.BlendingOptions;
-import io.github.steromano87.pig4j.serialization.ColorDeserializer;
-import io.github.steromano87.pig4j.serialization.ColorSerializer;
+import com.github.steromano87.pig4j.layers.Layer;
+import com.github.steromano87.pig4j.options.BlendingOptions;
+import com.github.steromano87.pig4j.serialization.ColorDeserializer;
+import com.github.steromano87.pig4j.serialization.ColorSerializer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
