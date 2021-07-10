@@ -25,7 +25,7 @@ public class ScalingOptions {
 
     @JsonProperty
     @JacksonXmlProperty
-    private Double scale;
+    private Double scale = 1.0;
 
     @JsonProperty
     @JacksonXmlProperty
