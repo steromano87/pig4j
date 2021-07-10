@@ -62,11 +62,11 @@ public class ScalingOptions {
 
         if (this.scale == null) {
             if (this.width == null) {
-                double scale = (double) this.height / originalHeight;
-                this.width = Math.toIntExact(Math.round(originalWidth * scale));
+                double calculatedScale = (double) this.height / originalHeight;
+                this.width = Math.toIntExact(Math.round(originalWidth * calculatedScale));
             } else if (this.height == null) {
-                double scale = (double) this.width / originalWidth;
-                this.height = Math.toIntExact(Math.round(originalHeight * scale));
+                double calculatedScale = (double) this.width / originalWidth;
+                this.height = Math.toIntExact(Math.round(originalHeight * calculatedScale));
             }
         } else {
             this.width = Math.toIntExact(Math.round(originalWidth * this.scale));
