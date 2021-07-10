@@ -51,13 +51,29 @@ public class ImageGenerator {
     @JsonIgnore
     private BufferedImage processedImage;
 
+    @JacksonXmlProperty(localName = "width")
+    @JsonProperty("width")
+    private final int canvasWidth;
+
+    @JacksonXmlProperty(localName = "height")
+    @JsonProperty("height")
+    private final int canvasHeight;
+
+    @JacksonXmlProperty
+    @JsonProperty
+    private Color backgroundColor;
+
+    @JacksonXmlProperty(localName = "alphaChannel")
+    @JsonProperty("alphaChannel")
+    private final boolean hasAlphaChannel;
+
     /**
      * Creates an empty image generator with white background and no alpha channel support
      *
      * @param width  the width of the image canvas, expressed in pixels
      * @param height the height of the image canvas, expressed in pixels
      */
-    public ImageGenerator(int width, int height) {
+    public ImageGenerator(@JsonProperty("width") int width, @JsonProperty("height") int height) {
         this(width, height, Color.WHITE);
     }
 
@@ -70,7 +86,8 @@ public class ImageGenerator {
      */
     public ImageGenerator(int width, int height, Color backgroundColor) {
         this(width, height, false);
-        this.fillWithBackgroundColor(backgroundColor);
+        this.backgroundColor = backgroundColor;
+        this.fillWithBackgroundColor(this.backgroundColor);
     }
 
     /**
@@ -81,8 +98,11 @@ public class ImageGenerator {
      * @param hasAlphaChannel whether the composed generator supports the alpha channel or not
      */
     public ImageGenerator(int width, int height, boolean hasAlphaChannel) {
-        int imageType = hasAlphaChannel ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB;
-        this.processedImage = new BufferedImage(width, height, imageType);
+        this.canvasWidth = width;
+        this.canvasHeight = height;
+        this.hasAlphaChannel = hasAlphaChannel;
+        int imageType = this.hasAlphaChannel ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB;
+        this.processedImage = new BufferedImage(this.canvasWidth, this.canvasHeight, imageType);
     }
 
     /**
@@ -182,6 +202,22 @@ public class ImageGenerator {
     public ImageGenerator addLayer(Layer layer) {
         this.layers.add(layer);
         return this;
+    }
+
+    public int getCanvasWidth() {
+        return this.canvasWidth;
+    }
+
+    public int getCanvasHeight() {
+        return this.canvasHeight;
+    }
+
+    public Color getBackgroundColor() {
+        return this.backgroundColor;
+    }
+
+    public boolean hasAlphaChannel() {
+        return this.hasAlphaChannel;
     }
 
     /**
