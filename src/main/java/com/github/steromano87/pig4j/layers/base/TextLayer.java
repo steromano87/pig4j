@@ -16,6 +16,7 @@ import com.github.steromano87.pig4j.serialization.ColorSerializer;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.List;
 
 @JsonDeserialize(as = Layer.class)
 @JsonInclude(JsonInclude.Include.NON_DEFAULT)
@@ -23,12 +24,12 @@ public class TextLayer implements Layer {
     @JacksonXmlElementWrapper(localName = "textBlocks")
     @JacksonXmlProperty(localName = "textBlock")
     @JsonProperty
-    private ArrayList<TextBlock> textBlocks = new ArrayList<>();
+    private List<TextBlock> textBlocks = new ArrayList<>();
 
     @JsonProperty
     private BlendingOptions blendingOptions = new BlendingOptions();
 
-    public TextLayer setTextBlocks(ArrayList<TextBlock> textBlocks) {
+    public TextLayer setTextBlocks(List<TextBlock> textBlocks) {
         this.textBlocks = textBlocks;
         return this;
     }
