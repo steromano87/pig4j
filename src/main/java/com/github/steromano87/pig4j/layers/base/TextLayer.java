@@ -46,20 +46,18 @@ public class TextLayer implements Layer {
 
     @Override
     public BufferedImage apply(BufferedImage image) {
-        boolean hasTransparency = image.getColorModel().hasAlpha();
+        // Image should support transparency if even one text block has an alpha color
+        boolean hasTransparency = this.textBlocks.stream().anyMatch(tb -> tb.getColor().getAlpha() < 255);
         int imageType = hasTransparency ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB;
-        BufferedImage outputImage = new BufferedImage(image.getWidth(), image.getHeight(), imageType);
-        Graphics2D graphics2D = outputImage.createGraphics();
-        graphics2D.drawImage(image, 0, 0, null);
-        graphics2D.dispose();
+        BufferedImage textImage = new BufferedImage(image.getWidth(), image.getHeight(), imageType);
 
         for (TextBlock textBlock : this.textBlocks) {
-            outputImage = this.drawTextBlock(textBlock, outputImage);
+            this.drawTextBlock(textBlock, textImage);
         }
-        return this.blendingOptions.apply(image, outputImage);
+        return this.blendingOptions.apply(image, textImage);
     }
 
-    private BufferedImage drawTextBlock(TextBlock textBlock, BufferedImage canvas) {
+    private void drawTextBlock(TextBlock textBlock, BufferedImage canvas) {
         Graphics2D graphics2D = canvas.createGraphics();
         graphics2D.setColor(textBlock.getColor());
         Font font = new Font(
@@ -70,8 +68,6 @@ public class TextLayer implements Layer {
         graphics2D.setFont(font);
         graphics2D.drawString(textBlock.getContent(), textBlock.getX(), textBlock.getY());
         graphics2D.dispose();
-
-        return canvas;
     }
 
     @JacksonXmlRootElement(localName = "textBlock")
