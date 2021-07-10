@@ -15,6 +15,10 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
+import com.github.steromano87.pig4j.exceptions.ConfigReadingException;
+import com.github.steromano87.pig4j.exceptions.ConfigWritingException;
+import com.github.steromano87.pig4j.exceptions.ImageGenerationException;
+import com.github.steromano87.pig4j.exceptions.ImageWritingException;
 import com.github.steromano87.pig4j.layers.Layer;
 
 import javax.imageio.ImageIO;
@@ -88,11 +92,15 @@ public class ImageGenerator {
      *
      * @param xmlFile the file to use to build the image generator
      * @return the image generator instance, pre-configured according to the input file
-     * @throws IOException when the file is unreadable or malformed
+     * @throws ConfigReadingException when the file is unreadable or malformed
      */
-    public static ImageGenerator fromXmlConfig(File xmlFile) throws IOException {
-        ObjectMapper mapper = ImageGenerator.configureMapperUsingProperty(new XmlMapper());
-        return mapper.readValue(xmlFile, ImageGenerator.class);
+    public static ImageGenerator fromXmlConfig(File xmlFile) throws ConfigReadingException {
+        try {
+            ObjectMapper mapper = ImageGenerator.configureMapperUsingProperty(new XmlMapper());
+            return mapper.readValue(xmlFile, ImageGenerator.class);
+        } catch (IOException exc) {
+            throw new ConfigReadingException("Cannot generate image generator from XML file: " + xmlFile, exc);
+        }
     }
 
     /**
@@ -102,11 +110,15 @@ public class ImageGenerator {
      *
      * @param jsonFile the file to use to build the image generator
      * @return the image generator instance, pre-configured according to the input file
-     * @throws IOException when the file is unreadable or malformed
+     * @throws ConfigReadingException when the file is unreadable or malformed
      */
-    public static ImageGenerator fromJsonConfig(File jsonFile) throws IOException {
-        ObjectMapper mapper = ImageGenerator.configureMapperUsingWrapperObject(new ObjectMapper());
-        return mapper.readValue(jsonFile, ImageGenerator.class);
+    public static ImageGenerator fromJsonConfig(File jsonFile) throws ConfigReadingException {
+        try {
+            ObjectMapper mapper = ImageGenerator.configureMapperUsingWrapperObject(new ObjectMapper());
+            return mapper.readValue(jsonFile, ImageGenerator.class);
+        } catch (IOException exc) {
+            throw new ConfigReadingException("Cannot generate image generator from JSON file: " + jsonFile, exc);
+        }
     }
 
     /**
@@ -116,15 +128,19 @@ public class ImageGenerator {
      *
      * @param yamlFile the file to use to build the image generator
      * @return the image generator instance, pre-configured according to the input file
-     * @throws IOException when the file is unreadable or malformed
+     * @throws ConfigReadingException when the file is unreadable or malformed
      */
-    public static ImageGenerator fromYamlConfig(File yamlFile) throws IOException {
-        YAMLFactory yamlFactory = new YAMLFactory();
-        yamlFactory.enable(YAMLGenerator.Feature.MINIMIZE_QUOTES);
-        yamlFactory.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
-        yamlFactory.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
-        ObjectMapper mapper = ImageGenerator.configureMapperUsingWrapperObject(new ObjectMapper(yamlFactory));
-        return mapper.readValue(yamlFile, ImageGenerator.class);
+    public static ImageGenerator fromYamlConfig(File yamlFile) throws ConfigReadingException {
+        try {
+            YAMLFactory yamlFactory = new YAMLFactory();
+            yamlFactory.enable(YAMLGenerator.Feature.MINIMIZE_QUOTES);
+            yamlFactory.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
+            yamlFactory.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
+            ObjectMapper mapper = ImageGenerator.configureMapperUsingWrapperObject(new ObjectMapper(yamlFactory));
+            return mapper.readValue(yamlFile, ImageGenerator.class);
+        } catch (IOException exc) {
+            throw new ConfigReadingException("Cannot generate image generator from YAML file: " + yamlFile, exc);
+        }
     }
 
     private static ObjectMapper configureMapperUsingProperty(ObjectMapper mapper) {
@@ -172,23 +188,31 @@ public class ImageGenerator {
      * Dumps the existing stack and configuration into an XML file for subsequent use or for debugging purposes
      *
      * @param xmlFile the destination file
-     * @throws IOException when the file s not writable (denied permissions or non-existing path)
+     * @throws ConfigWritingException when the file s not writable (denied permissions or non-existing path)
      */
-    public void toXmlConfig(File xmlFile) throws IOException {
-        XmlMapper mapper = (XmlMapper) ImageGenerator.configureMapperUsingProperty(new XmlMapper());
-        mapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
-        mapper.writeValue(xmlFile, this);
+    public void toXmlConfig(File xmlFile) throws ConfigWritingException {
+        try {
+            XmlMapper mapper = (XmlMapper) ImageGenerator.configureMapperUsingProperty(new XmlMapper());
+            mapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
+            mapper.writeValue(xmlFile, this);
+        } catch (IOException exc) {
+            throw new ConfigWritingException("Cannot dump configuration to XML file: " + xmlFile, exc);
+        }
     }
 
     /**
      * Dumps the existing stack and configuration into a JSON file for subsequent use or for debugging purposes
      *
      * @param jsonFile the destination file
-     * @throws IOException when the file s not writable (denied permissions or non-existing path)
+     * @throws ConfigWritingException when the file s not writable (denied permissions or non-existing path)
      */
     public void toJsonConfig(File jsonFile) throws IOException {
-        ObjectMapper mapper = ImageGenerator.configureMapperUsingWrapperObject(new ObjectMapper());
-        mapper.writeValue(jsonFile, this);
+        try {
+            ObjectMapper mapper = ImageGenerator.configureMapperUsingWrapperObject(new ObjectMapper());
+            mapper.writeValue(jsonFile, this);
+        } catch (IOException exc) {
+            throw new ConfigWritingException("Cannot dump configuration to JSON file: " + jsonFile, exc);
+        }
     }
 
     /**
@@ -198,12 +222,16 @@ public class ImageGenerator {
      * @throws IOException when the file s not writable (denied permissions or non-existing path)
      */
     public void toYamlConfig(File yamlFile) throws IOException {
-        YAMLFactory yamlFactory = new YAMLFactory();
-        yamlFactory.enable(YAMLGenerator.Feature.MINIMIZE_QUOTES);
-        yamlFactory.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
-        yamlFactory.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
-        ObjectMapper mapper = ImageGenerator.configureMapperUsingWrapperObject(new ObjectMapper(yamlFactory));
-        mapper.writeValue(yamlFile, this);
+        try {
+            YAMLFactory yamlFactory = new YAMLFactory();
+            yamlFactory.enable(YAMLGenerator.Feature.MINIMIZE_QUOTES);
+            yamlFactory.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
+            yamlFactory.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
+            ObjectMapper mapper = ImageGenerator.configureMapperUsingWrapperObject(new ObjectMapper(yamlFactory));
+            mapper.writeValue(yamlFile, this);
+        } catch (IOException exc) {
+            throw new ConfigWritingException("Cannot dump configuration to YAML file: " + yamlFile, exc);
+        }
     }
 
     /**
@@ -216,10 +244,11 @@ public class ImageGenerator {
      * to add another layer and re-generate the image, existing layers will e preserved.
      *
      * @return the image generator instance, using builder pattern
+     * @throws ImageGenerationException if there are errors during image generation
      */
-    public ImageGenerator build() {
+    public ImageGenerator build() throws ImageGenerationException {
         if (this.layers.isEmpty()) {
-            throw new IllegalStateException("No layer has been added");
+            throw new ImageGenerationException("No layer has been added");
         }
 
         for (Layer layer : this.layers) {
@@ -232,9 +261,9 @@ public class ImageGenerator {
      * Returns the processed image as a Java buffered image (for internal use
      *
      * @return the processed image as a buffered image
-     * @throws IllegalStateException when the final image has not been processed before or if no layers have been added
+     * @throws ImageGenerationException when the final image has not been processed before or if no layers have been added
      */
-    public BufferedImage toImage() throws IllegalStateException {
+    public BufferedImage toImage() throws ImageGenerationException {
         return this.safelyGetProcessedImage();
     }
 
@@ -243,16 +272,16 @@ public class ImageGenerator {
      *
      * @param format the underlying image format
      * @return the processed image as a byte array
-     * @throws IllegalStateException when the byte array is not writable or
+     * @throws ImageWritingException when the byte array is not writable or
      *                               if there are some errors during image processing
      */
-    public byte[] toByteArray(ImageFormat format) throws IllegalStateException {
+    public byte[] toByteArray(ImageFormat format) throws ImageWritingException {
         try {
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ImageIO.write(this.safelyGetProcessedImage(), format.getExtension(), outputStream);
             return outputStream.toByteArray();
-        } catch (IOException | IllegalStateException exc) {
-            throw new IllegalStateException("Cannot write to output byte array", exc);
+        } catch (IOException exc) {
+            throw new ImageWritingException("Cannot write to output byte array", exc);
         }
     }
 
@@ -262,15 +291,15 @@ public class ImageGenerator {
      * @param file   the output file
      * @param format the file format
      * @return whether the file has been written or not
-     * @throws IOException if there are errors when writing the file or
-     *                     if there are some errors during image processing
+     * @throws ImageWritingException if there are errors when writing the file or
+     *                               if there are some errors during image processing
      */
-    public boolean toFile(File file, ImageFormat format) throws IOException {
+    public boolean toFile(File file, ImageFormat format) throws ImageWritingException {
         try {
             FileOutputStream outputStream = new FileOutputStream(file);
             return ImageIO.write(this.safelyGetProcessedImage(), format.getExtension(), outputStream);
-        } catch (IOException | IllegalStateException exc) {
-            throw new IllegalStateException("Cannot write to output file", exc);
+        } catch (IOException exc) {
+            throw new ImageWritingException("Cannot write to output file", exc);
         }
     }
 
@@ -279,9 +308,9 @@ public class ImageGenerator {
      *
      * @param format the underlying image format
      * @return the Base64 representation of the processed image
-     * @throws IllegalStateException if there are some errors during the processed image generation
+     * @throws ImageWritingException if there are some errors during the processed image generation
      */
-    public String toBase64(ImageFormat format) throws IllegalStateException {
+    public String toBase64(ImageFormat format) throws ImageWritingException {
         byte[] byteArray = this.toByteArray(format);
         return Base64.getEncoder().encodeToString(byteArray);
     }
@@ -293,18 +322,18 @@ public class ImageGenerator {
      *
      * @param format the underlying image format
      * @return the data URL representation of the processed image
-     * @throws IllegalStateException if there are some errors during the processed image generation
+     * @throws ImageWritingException if there are some errors during the processed image generation
      * @link https://en.wikipedia.org/wiki/Data_URI_scheme
      */
-    public String toDataUrl(ImageFormat format) throws IllegalStateException {
+    public String toDataUrl(ImageFormat format) throws ImageWritingException {
         String base64image = this.toBase64(format);
         String mimeType = format.getMimeType();
         return String.format("data:%s;base64,%s", mimeType, base64image);
     }
 
-    private BufferedImage safelyGetProcessedImage() throws IllegalStateException {
+    private BufferedImage safelyGetProcessedImage() throws ImageGenerationException {
         if (Objects.isNull(this.processedImage)) {
-            throw new IllegalStateException(
+            throw new ImageGenerationException(
                     "No image was processed. " +
                             "Ensure that at least one layer is set " +
                             "and that the build() method has been executed at least once " +
