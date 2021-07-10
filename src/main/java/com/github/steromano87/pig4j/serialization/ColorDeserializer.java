@@ -10,6 +10,11 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Custom color deserializer to allow to represent any color in string format
+ *
+ * Currently only RGB format is supported
+ */
 public class ColorDeserializer extends StdDeserializer<Color> {
     public ColorDeserializer() {
         this(null);

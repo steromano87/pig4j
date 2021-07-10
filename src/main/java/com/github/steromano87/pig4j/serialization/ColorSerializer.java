@@ -7,6 +7,11 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * Custom color serializer to allow to represent any color in string format
+ *
+ * Currently only RGB format is supported
+ */
 public class ColorSerializer extends StdSerializer<Color> {
     public ColorSerializer() {
         this(null);
