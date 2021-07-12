@@ -26,21 +26,19 @@ public class PositionOptions {
     }
 
     public BufferedImage apply(BufferedImage bgImage, BufferedImage fgImage) {
+        // Initialize a canvas with size equal to the background image
         BufferedImage outputImage = new BufferedImage(bgImage.getWidth(), bgImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+        // Calculate start drawing point for the foreground image
+        int startDrawingPointX = (int) Math.round(this.x - (fgImage.getWidth() * this.imageHook.getHorizontalRelativePosition()));
+        int startDrawingPointY = (int) Math.round(this.y - (fgImage.getHeight() * this.imageHook.getVerticalRelativePosition()));
 
         // Draw the bgImage on the canvas using the assigned position
         Graphics2D graphics2D = outputImage.createGraphics();
-        graphics2D.drawImage(fgImage, 0, 0, null);
+        graphics2D.drawImage(fgImage, startDrawingPointX, startDrawingPointY, null);
         graphics2D.dispose();
 
         return outputImage;
-    }
-
-    private int[] calculateStartDrawingPoint(int imageWidth, int imageHeight, int canvasWidth, int canvasHeight, Hook hook) {
-        int startDrawingPointX = 0;
-        int startDrawingPointY = 0;
-
-        return new int[]{startDrawingPointX, startDrawingPointY};
     }
 
     public enum Hook {
