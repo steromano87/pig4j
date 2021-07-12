@@ -1,32 +1,16 @@
 package com.github.steromano87.pig4j.layers.base;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlText;
 import com.github.steromano87.pig4j.layers.Layer;
 import com.github.steromano87.pig4j.options.BlendingOptions;
-import com.github.steromano87.pig4j.serialization.ColorDeserializer;
-import com.github.steromano87.pig4j.serialization.ColorSerializer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
 
-@JsonDeserialize(as = Layer.class)
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class TextLayer implements Layer {
-    @JacksonXmlElementWrapper(localName = "textBlocks")
-    @JacksonXmlProperty(localName = "textBlock")
-    @JsonProperty
     private List<TextBlock> textBlocks = new ArrayList<>();
 
-    @JsonProperty
     private BlendingOptions blendingOptions = new BlendingOptions();
 
     public TextLayer setTextBlocks(List<TextBlock> textBlocks) {
@@ -70,27 +54,12 @@ public class TextLayer implements Layer {
         graphics2D.dispose();
     }
 
-    @JacksonXmlRootElement(localName = "textBlock")
-    @JsonInclude(JsonInclude.Include.NON_DEFAULT)
     public static class TextBlock {
-        @JacksonXmlText
         private String content;
-
-        @JacksonXmlProperty(isAttribute = true)
         private String font = "Serif";
-
-        @JacksonXmlProperty(isAttribute = true)
         private Integer size = 12;
-
-        @JacksonXmlProperty(isAttribute = true)
-        @JsonSerialize(using = ColorSerializer.class)
-        @JsonDeserialize(using = ColorDeserializer.class)
         private Color color = Color.BLACK;
-
-        @JacksonXmlProperty(isAttribute = true)
         private int x = 0;
-
-        @JacksonXmlProperty(isAttribute = true)
         private int y = 0;
 
         public TextBlock setContent(String content) {

@@ -1,22 +1,6 @@
 package com.github.steromano87.pig4j;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
-import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
-import com.github.steromano87.pig4j.exceptions.ConfigReadingException;
-import com.github.steromano87.pig4j.exceptions.ConfigWritingException;
 import com.github.steromano87.pig4j.exceptions.ImageGenerationException;
 import com.github.steromano87.pig4j.exceptions.ImageWritingException;
 import com.github.steromano87.pig4j.layers.Layer;
@@ -40,31 +24,15 @@ import java.util.Objects;
  *
  * @see Layer
  */
-@JsonRootName("configuration")
-@JacksonXmlRootElement(localName = "configuration")
 public class ImageGenerator {
-    @JacksonXmlElementWrapper(localName = "layers")
-    @JacksonXmlProperty(localName = "layer")
-    @JsonProperty
     private final ArrayList<Layer> layers = new ArrayList<>();
 
-    @JsonIgnore
     private BufferedImage processedImage;
-
-    @JacksonXmlProperty(localName = "width")
-    @JsonProperty("width")
     private final int canvasWidth;
-
-    @JacksonXmlProperty(localName = "height")
-    @JsonProperty("height")
     private final int canvasHeight;
 
-    @JacksonXmlProperty
-    @JsonProperty
     private Color backgroundColor;
 
-    @JacksonXmlProperty(localName = "alphaChannel")
-    @JsonProperty("alphaChannel")
     private final boolean hasAlphaChannel;
 
     /**
@@ -82,113 +50,31 @@ public class ImageGenerator {
      *
      * @param width           the width of the image canvas, expressed in pixels
      * @param height          the height of the image canvas, expressed in pixels
-     * @param backgroundColor the background color
+     * @param backgroundColor the background color to use as lower-level color
      */
     public ImageGenerator(int width, int height, Color backgroundColor) {
-        this(width, height, false);
-        this.backgroundColor = backgroundColor;
-        this.fillWithBackgroundColor(this.backgroundColor);
+        this(width, height, backgroundColor, false);
     }
 
     /**
      * Creates an empty image generator with alpha channel support. The background will be set as transparent.
      *
      * @param width           the width of the image canvas, expressed in pixels
-     * @param height          he height of the image canvas, expressed in pixels
+     * @param height          the height of the image canvas, expressed in pixels
+     * @param backgroundColor the background color to use as lower-level color
      * @param hasAlphaChannel whether the composed generator supports the alpha channel or not
      */
-    public ImageGenerator(int width, int height, boolean hasAlphaChannel) {
+    public ImageGenerator(int width, int height, Color backgroundColor, boolean hasAlphaChannel) {
         this.canvasWidth = width;
         this.canvasHeight = height;
+        this.backgroundColor = backgroundColor;
         this.hasAlphaChannel = hasAlphaChannel;
         int imageType = this.hasAlphaChannel ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB;
         this.processedImage = new BufferedImage(this.canvasWidth, this.canvasHeight, imageType);
-    }
 
-    /**
-     * Builds an image generator instance starting from an XML file.
-     * <p>
-     * XML format and specifications varies according to the used layer.
-     *
-     * @param xmlFile the file to use to build the image generator
-     * @return the image generator instance, pre-configured according to the input file
-     * @throws ConfigReadingException when the file is unreadable or malformed
-     */
-    public static ImageGenerator fromXmlConfig(File xmlFile) throws ConfigReadingException {
-        try {
-            ObjectMapper mapper = ImageGenerator.configureMapperUsingProperty(new XmlMapper());
-            return mapper.readValue(xmlFile, ImageGenerator.class);
-        } catch (IOException exc) {
-            throw new ConfigReadingException("Cannot generate image generator from XML file: " + xmlFile, exc);
+        if (!Objects.isNull(backgroundColor)) {
+            this.fillWithBackgroundColor(this.backgroundColor);
         }
-    }
-
-    /**
-     * Builds an image generator instance starting from a JSON file.
-     * <p>
-     * JSON format and specifications varies according to the used layer.
-     *
-     * @param jsonFile the file to use to build the image generator
-     * @return the image generator instance, pre-configured according to the input file
-     * @throws ConfigReadingException when the file is unreadable or malformed
-     */
-    public static ImageGenerator fromJsonConfig(File jsonFile) throws ConfigReadingException {
-        try {
-            ObjectMapper mapper = ImageGenerator.configureMapperUsingWrapperObject(new ObjectMapper());
-            return mapper.readValue(jsonFile, ImageGenerator.class);
-        } catch (IOException exc) {
-            throw new ConfigReadingException("Cannot generate image generator from JSON file: " + jsonFile, exc);
-        }
-    }
-
-    /**
-     * Builds an image generator instance starting from a YAML file.
-     * <p>
-     * YAML format and specifications varies according to the used layer.
-     *
-     * @param yamlFile the file to use to build the image generator
-     * @return the image generator instance, pre-configured according to the input file
-     * @throws ConfigReadingException when the file is unreadable or malformed
-     */
-    public static ImageGenerator fromYamlConfig(File yamlFile) throws ConfigReadingException {
-        try {
-            YAMLFactory yamlFactory = new YAMLFactory();
-            yamlFactory.enable(YAMLGenerator.Feature.MINIMIZE_QUOTES);
-            yamlFactory.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
-            yamlFactory.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
-            ObjectMapper mapper = ImageGenerator.configureMapperUsingWrapperObject(new ObjectMapper(yamlFactory));
-            return mapper.readValue(yamlFile, ImageGenerator.class);
-        } catch (IOException exc) {
-            throw new ConfigReadingException("Cannot generate image generator from YAML file: " + yamlFile, exc);
-        }
-    }
-
-    private static ObjectMapper configureMapperUsingProperty(ObjectMapper mapper) {
-        TypeResolverBuilder<?> typeResolverBuilder = ObjectMapper.DefaultTypeResolverBuilder.construct(
-                ObjectMapper.DefaultTyping.OBJECT_AND_NON_CONCRETE,
-                mapper.getPolymorphicTypeValidator()
-        );
-        typeResolverBuilder.init(JsonTypeInfo.Id.NAME, null);
-        typeResolverBuilder.inclusion(JsonTypeInfo.As.PROPERTY);
-        typeResolverBuilder.typeProperty("class");
-        mapper.setDefaultTyping(typeResolverBuilder);
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        mapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
-        mapper.enable(DeserializationFeature.UNWRAP_ROOT_VALUE);
-        return mapper;
-    }
-
-    private static ObjectMapper configureMapperUsingWrapperObject(ObjectMapper mapper) {
-        TypeResolverBuilder<?> typeResolverBuilder = ObjectMapper.DefaultTypeResolverBuilder.construct(
-                ObjectMapper.DefaultTyping.OBJECT_AND_NON_CONCRETE,
-                mapper.getPolymorphicTypeValidator()
-        );
-        typeResolverBuilder.init(JsonTypeInfo.Id.NAME, null);
-        typeResolverBuilder.inclusion(JsonTypeInfo.As.WRAPPER_OBJECT);
-        mapper.setDefaultTyping(typeResolverBuilder);
-        mapper.enable(SerializationFeature.INDENT_OUTPUT);
-        mapper.enable(SerializationFeature.WRAP_ROOT_VALUE);
-        return mapper;
     }
 
     /**
@@ -218,56 +104,6 @@ public class ImageGenerator {
 
     public boolean hasAlphaChannel() {
         return this.hasAlphaChannel;
-    }
-
-    /**
-     * Dumps the existing stack and configuration into an XML file for subsequent use or for debugging purposes
-     *
-     * @param xmlFile the destination file
-     * @throws ConfigWritingException when the file s not writable (denied permissions or non-existing path)
-     */
-    public void toXmlConfig(File xmlFile) throws ConfigWritingException {
-        try {
-            XmlMapper mapper = (XmlMapper) ImageGenerator.configureMapperUsingProperty(new XmlMapper());
-            mapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
-            mapper.writeValue(xmlFile, this);
-        } catch (IOException exc) {
-            throw new ConfigWritingException("Cannot dump configuration to XML file: " + xmlFile, exc);
-        }
-    }
-
-    /**
-     * Dumps the existing stack and configuration into a JSON file for subsequent use or for debugging purposes
-     *
-     * @param jsonFile the destination file
-     * @throws ConfigWritingException when the file s not writable (denied permissions or non-existing path)
-     */
-    public void toJsonConfig(File jsonFile) throws IOException {
-        try {
-            ObjectMapper mapper = ImageGenerator.configureMapperUsingWrapperObject(new ObjectMapper());
-            mapper.writeValue(jsonFile, this);
-        } catch (IOException exc) {
-            throw new ConfigWritingException("Cannot dump configuration to JSON file: " + jsonFile, exc);
-        }
-    }
-
-    /**
-     * Dumps the existing stack and configuration into a YAML file for subsequent use or for debugging purposes
-     *
-     * @param yamlFile the destination file
-     * @throws IOException when the file s not writable (denied permissions or non-existing path)
-     */
-    public void toYamlConfig(File yamlFile) throws IOException {
-        try {
-            YAMLFactory yamlFactory = new YAMLFactory();
-            yamlFactory.enable(YAMLGenerator.Feature.MINIMIZE_QUOTES);
-            yamlFactory.disable(YAMLGenerator.Feature.WRITE_DOC_START_MARKER);
-            yamlFactory.disable(YAMLGenerator.Feature.USE_NATIVE_TYPE_ID);
-            ObjectMapper mapper = ImageGenerator.configureMapperUsingWrapperObject(new ObjectMapper(yamlFactory));
-            mapper.writeValue(yamlFile, this);
-        } catch (IOException exc) {
-            throw new ConfigWritingException("Cannot dump configuration to YAML file: " + yamlFile, exc);
-        }
     }
 
     /**
@@ -383,7 +219,7 @@ public class ImageGenerator {
     private void fillWithBackgroundColor(Color color) {
         Graphics2D graphics2D = this.processedImage.createGraphics();
         graphics2D.setBackground(color);
-        graphics2D.clearRect(0, 0, this.processedImage.getWidth(), this.processedImage.getHeight());
+        graphics2D.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
         graphics2D.dispose();
     }
 }

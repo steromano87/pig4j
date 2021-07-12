@@ -1,8 +1,5 @@
 package com.github.steromano87.pig4j.options;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.twelvemonkeys.image.ResampleOp;
 
 import java.awt.image.BufferedImage;
@@ -13,22 +10,12 @@ import java.awt.image.BufferedImageOp;
  *
  * The option defines how an image with an arbitrary size is fitted on an existing canvas
  */
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class ScalingOptions {
-    @JsonProperty
-    @JacksonXmlProperty
     private Integer width;
-
-    @JsonProperty
-    @JacksonXmlProperty
     private Integer height;
 
-    @JsonProperty
-    @JacksonXmlProperty
     private Double scale = 1.0;
 
-    @JsonProperty
-    @JacksonXmlProperty
     private Algorithm algorithm = Algorithm.LANCZOS;
 
     public ScalingOptions setWidth(Integer width) {

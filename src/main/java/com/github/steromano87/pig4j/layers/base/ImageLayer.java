@@ -1,15 +1,9 @@
 package com.github.steromano87.pig4j.layers.base;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlCData;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.github.steromano87.pig4j.exceptions.ImageReadingException;
+import com.github.steromano87.pig4j.layers.Layer;
 import com.github.steromano87.pig4j.options.BlendingOptions;
 import com.github.steromano87.pig4j.options.ScalingOptions;
-import com.github.steromano87.pig4j.layers.Layer;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -21,26 +15,14 @@ import java.util.Base64;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-@JsonDeserialize(as = Layer.class)
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class ImageLayer implements Layer {
-    @JsonIgnore
     private BufferedImage sourceImage;
 
-    @JacksonXmlProperty(isAttribute = true)
-    @JsonProperty
     private File imageFile;
-
-    @JacksonXmlProperty(isAttribute = true)
-    @JsonProperty
     private URL imageUrl;
-
-    @JacksonXmlCData
-    @JsonProperty
     private String imageBase64;
 
     private ScalingOptions scalingOptions = new ScalingOptions();
-
     private BlendingOptions blendingOptions = new BlendingOptions();
 
     public ImageLayer setImageFile(File imageFile) {
@@ -88,7 +70,7 @@ public class ImageLayer implements Layer {
         return this;
     }
 
-    public ImageLayer setFusionOptions(BlendingOptions blendingOptions) {
+    public ImageLayer setBlendingOptions(BlendingOptions blendingOptions) {
         this.blendingOptions = blendingOptions;
         return this;
     }

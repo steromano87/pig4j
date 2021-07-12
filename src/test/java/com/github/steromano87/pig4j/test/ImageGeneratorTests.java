@@ -5,32 +5,23 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 class ImageGeneratorTests {
     @Test
-    void TestSimpleInstantiation() {
+    void testSimpleInstantiation() {
         ImageGenerator generator = new ImageGenerator(640, 480);
         Assertions.assertInstanceOf(ImageGenerator.class, generator);
     }
 
     @Test
-    void TestSimpleInstantiationWithBackgroundColor() {
+    void testSimpleInstantiationWithBackgroundColor() {
         ImageGenerator generator = new ImageGenerator(640, 480, Color.BLACK);
         Assertions.assertInstanceOf(ImageGenerator.class, generator);
     }
 
     @Test
-    void TestSimpleInstantiationWithAlphaChannel() {
-        ImageGenerator generator = new ImageGenerator(640, 480, true);
-        Assertions.assertInstanceOf(ImageGenerator.class, generator);
-    }
-
-    @Test
-    void TestInstantiationFromXmlFile() {
-        Path validFilePath = Paths.get("src/test/resources/imageGenerator/instantiation", "validInstantiation.xml");
-        ImageGenerator generator = ImageGenerator.fromXmlConfig(validFilePath.toFile());
+    void testSimpleInstantiationWithAlphaChannel() {
+        ImageGenerator generator = new ImageGenerator(640, 480, null,true);
         Assertions.assertInstanceOf(ImageGenerator.class, generator);
     }
 }

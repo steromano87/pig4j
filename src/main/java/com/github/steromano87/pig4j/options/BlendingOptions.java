@@ -1,10 +1,6 @@
 package com.github.steromano87.pig4j.options;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
@@ -12,14 +8,9 @@ import java.util.Objects;
 /**
  * Class that holds options used to blend two images together
  */
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class BlendingOptions {
-    @JsonProperty
-    @JacksonXmlProperty
     private float alpha = 1.0f;
 
-    @JsonProperty
-    @JacksonXmlProperty
     private Method method = Method.NORMAL;
 
     public BlendingOptions setAlpha(float alpha) {

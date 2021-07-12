@@ -1,23 +1,12 @@
 package com.github.steromano87.pig4j.layers.base;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.github.steromano87.pig4j.layers.Layer;
 import com.github.steromano87.pig4j.options.BlendingOptions;
-import com.github.steromano87.pig4j.serialization.ColorDeserializer;
-import com.github.steromano87.pig4j.serialization.ColorSerializer;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-@JsonDeserialize(as = Layer.class)
-@JsonInclude(JsonInclude.Include.NON_DEFAULT)
 public class SingleColorLayer implements Layer {
-    @JacksonXmlProperty(isAttribute = true)
-    @JsonSerialize(using = ColorSerializer.class)
-    @JsonDeserialize(using = ColorDeserializer.class)
     private Color color;
 
     private BlendingOptions blendingOptions = new BlendingOptions();
