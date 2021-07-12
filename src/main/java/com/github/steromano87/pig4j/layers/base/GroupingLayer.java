@@ -2,6 +2,8 @@ package com.github.steromano87.pig4j.layers.base;
 
 import com.github.steromano87.pig4j.layers.Layer;
 import com.github.steromano87.pig4j.options.BlendingOptions;
+import com.github.steromano87.pig4j.options.PositionOptions;
+import com.github.steromano87.pig4j.options.ScalingOptions;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -11,6 +13,8 @@ import java.util.List;
 public class GroupingLayer implements Layer {
     private List<Layer> layers = new ArrayList<>();
 
+    private ScalingOptions scalingOptions = new ScalingOptions();
+    private PositionOptions positionOptions = new PositionOptions();
     private BlendingOptions blendingOptions = new BlendingOptions();
 
     public void setLayers(List<Layer> layers) {
@@ -19,6 +23,16 @@ public class GroupingLayer implements Layer {
 
     public void addLayer(Layer layer) {
         this.layers.add(layer);
+    }
+
+    public GroupingLayer setScalingOptions(ScalingOptions scalingOptions) {
+        this.scalingOptions = scalingOptions;
+        return this;
+    }
+
+    public GroupingLayer setPositionOptions(PositionOptions positionOptions) {
+        this.positionOptions = positionOptions;
+        return this;
     }
 
     public GroupingLayer setBlendingOptions(BlendingOptions blendingOptions) {
@@ -36,6 +50,12 @@ public class GroupingLayer implements Layer {
             layer.apply(layerCanvas);
         }
 
-        return this.blendingOptions.apply(image, layerCanvas);
+        return this.blendingOptions.apply(
+                image,
+                this.positionOptions.apply(
+                        image,
+                        this.scalingOptions.apply(layerCanvas)
+                )
+        );
     }
 }

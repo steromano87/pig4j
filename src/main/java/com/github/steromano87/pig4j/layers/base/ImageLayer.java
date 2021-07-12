@@ -3,6 +3,7 @@ package com.github.steromano87.pig4j.layers.base;
 import com.github.steromano87.pig4j.exceptions.ImageReadingException;
 import com.github.steromano87.pig4j.layers.Layer;
 import com.github.steromano87.pig4j.options.BlendingOptions;
+import com.github.steromano87.pig4j.options.PositionOptions;
 import com.github.steromano87.pig4j.options.ScalingOptions;
 
 import javax.imageio.ImageIO;
@@ -23,6 +24,7 @@ public class ImageLayer implements Layer {
     private String imageBase64;
 
     private ScalingOptions scalingOptions = new ScalingOptions();
+    private PositionOptions positionOptions = new PositionOptions();
     private BlendingOptions blendingOptions = new BlendingOptions();
 
     public ImageLayer setImageFile(File imageFile) {
@@ -65,8 +67,25 @@ public class ImageLayer implements Layer {
         return this;
     }
 
+    public ScalingOptions getScalingOptions() {
+        return this.scalingOptions;
+    }
+
+    public PositionOptions getPositionOptions() {
+        return this.positionOptions;
+    }
+
+    public BlendingOptions getBlendingOptions() {
+        return this.blendingOptions;
+    }
+
     public ImageLayer setScalingOptions(ScalingOptions scalingOptions) {
         this.scalingOptions = scalingOptions;
+        return this;
+    }
+
+    public ImageLayer setPositionOptions(PositionOptions positionOptions) {
+        this.positionOptions = positionOptions;
         return this;
     }
 
@@ -80,7 +99,10 @@ public class ImageLayer implements Layer {
         this.checkStateConsistency();
         return this.blendingOptions.apply(
                 image,
-                this.scalingOptions.apply(this.sourceImage)
+                this.positionOptions.apply(
+                        image,
+                        this.scalingOptions.apply(this.sourceImage)
+                )
         );
     }
 
