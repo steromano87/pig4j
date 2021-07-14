@@ -53,4 +53,24 @@ class ImageGeneratorTests {
                 () -> Assertions.assertFalse(outputImage.getColorModel().hasAlpha())
         );
     }
+
+    @Test
+    void testMultipleBuildInvocations() {
+        ImageGenerator generator = new ImageGenerator(640, 480);
+        SingleColorLayer layer = new SingleColorLayer();
+        layer.setColor(Color.BLUE);
+        generator.addLayer(layer);
+
+        generator.build();
+        generator.build();
+
+        BufferedImage outputImage = generator.build().toImage();
+
+        Assertions.assertAll(
+                () -> Assertions.assertInstanceOf(BufferedImage.class, outputImage),
+                () -> Assertions.assertEquals(640, outputImage.getWidth()),
+                () -> Assertions.assertEquals(480, outputImage.getHeight()),
+                () -> Assertions.assertFalse(outputImage.getColorModel().hasAlpha())
+        );
+    }
 }
