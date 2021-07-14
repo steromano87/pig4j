@@ -20,16 +20,20 @@ public class ScalingOptions {
 
     public ScalingOptions setWidth(Integer width) {
         this.width = width;
+        this.scale = null;
         return this;
     }
 
     public ScalingOptions setHeight(Integer height) {
         this.height = height;
+        this.scale = null;
         return this;
     }
 
     public ScalingOptions setScale(Double scale) {
         this.scale = scale;
+        this.width = null;
+        this.height = null;
         return this;
     }
 
