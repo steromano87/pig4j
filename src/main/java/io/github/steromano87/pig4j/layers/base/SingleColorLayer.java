@@ -1,7 +1,7 @@
-package com.github.steromano87.pig4j.layers.base;
+package io.github.steromano87.pig4j.layers.base;
 
-import com.github.steromano87.pig4j.layers.Layer;
-import com.github.steromano87.pig4j.options.BlendingOptions;
+import io.github.steromano87.pig4j.layers.Layer;
+import io.github.steromano87.pig4j.options.BlendingOptions;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

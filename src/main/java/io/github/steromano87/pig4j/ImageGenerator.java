@@ -1,8 +1,8 @@
-package com.github.steromano87.pig4j;
+package io.github.steromano87.pig4j;
 
-import com.github.steromano87.pig4j.exceptions.ImageGenerationException;
-import com.github.steromano87.pig4j.exceptions.ImageWritingException;
-import com.github.steromano87.pig4j.layers.Layer;
+import io.github.steromano87.pig4j.exceptions.ImageGenerationException;
+import io.github.steromano87.pig4j.exceptions.ImageWritingException;
+import io.github.steromano87.pig4j.layers.Layer;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

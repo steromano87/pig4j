@@ -1,9 +1,9 @@
-package com.github.steromano87.pig4j.layers.base;
+package io.github.steromano87.pig4j.layers.base;
 
-import com.github.steromano87.pig4j.layers.Layer;
-import com.github.steromano87.pig4j.options.BlendingOptions;
-import com.github.steromano87.pig4j.options.PositionOptions;
-import com.github.steromano87.pig4j.options.ScalingOptions;
+import io.github.steromano87.pig4j.layers.Layer;
+import io.github.steromano87.pig4j.options.BlendingOptions;
+import io.github.steromano87.pig4j.options.PositionOptions;
+import io.github.steromano87.pig4j.options.ScalingOptions;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

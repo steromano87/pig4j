@@ -1,4 +1,4 @@
-package com.github.steromano87.pig4j;
+package io.github.steromano87.pig4j;
 
 /**
  * Image formats managed by pig4j as output formats

@@ -1,4 +1,4 @@
-package com.github.steromano87.pig4j.options;
+package io.github.steromano87.pig4j.options;
 
 
 import java.awt.*;

@@ -1,4 +1,4 @@
-package com.github.steromano87.pig4j.layers;
+package io.github.steromano87.pig4j.layers;
 
 import java.awt.image.BufferedImage;
 

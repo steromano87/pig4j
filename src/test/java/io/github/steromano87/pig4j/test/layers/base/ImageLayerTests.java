@@ -1,9 +1,9 @@
-package com.github.steromano87.pig4j.test.layers.base;
+package io.github.steromano87.pig4j.test.layers.base;
 
-import com.github.steromano87.pig4j.ImageGenerator;
-import com.github.steromano87.pig4j.layers.base.ImageLayer;
-import com.github.steromano87.pig4j.options.PositionOptions;
-import com.github.steromano87.pig4j.options.ScalingOptions;
+import io.github.steromano87.pig4j.ImageGenerator;
+import io.github.steromano87.pig4j.layers.base.ImageLayer;
+import io.github.steromano87.pig4j.options.PositionOptions;
+import io.github.steromano87.pig4j.options.ScalingOptions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

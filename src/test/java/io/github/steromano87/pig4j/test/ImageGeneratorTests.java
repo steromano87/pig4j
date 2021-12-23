@@ -1,8 +1,8 @@
-package com.github.steromano87.pig4j.test;
+package io.github.steromano87.pig4j.test;
 
-import com.github.steromano87.pig4j.ImageGenerator;
-import com.github.steromano87.pig4j.exceptions.ImageGenerationException;
-import com.github.steromano87.pig4j.layers.base.SingleColorLayer;
+import io.github.steromano87.pig4j.ImageGenerator;
+import io.github.steromano87.pig4j.exceptions.ImageGenerationException;
+import io.github.steromano87.pig4j.layers.base.SingleColorLayer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
