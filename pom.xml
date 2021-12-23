@@ -15,6 +15,14 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <id>steromano87</id>
+            <name>Stefano Romanò</name>
+            <email>rumix87@gmail.com</email>
+        </developer>
+    </developers>
+
     <scm>
         <connection>scm:git:https://github.com/steromano87/pig4j.git</connection>
         <developerConnection>scm:git:git@github.com:steromano87/pig4j.git</developerConnection>
