@@ -194,7 +194,7 @@ public class ImageGenerator {
      * @param format the underlying image format
      * @return the data URL representation of the processed image
      * @throws ImageWritingException if there are some errors during the processed image generation
-     * @link https://en.wikipedia.org/wiki/Data_URI_scheme
+     * @see <a href="https://en.wikipedia.org/wiki/Data_URI_scheme">Data URI scheme</a>
      */
     public String toDataUrl(ImageFormat format) throws ImageWritingException {
         String base64image = this.toBase64(format);
