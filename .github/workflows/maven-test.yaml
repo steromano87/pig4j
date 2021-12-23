@@ -1,16 +1,16 @@
-name: Java CI with Maven
+name: Maven CI for non-release branches
 
 on:
   push:
-    branches: [ master ]
+    branches-ignore:
+      - master
   pull_request:
-    branches: [ master ]
+    branches:
+      - master
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -19,4 +19,4 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
       - name: Build and test with Maven
-        run: mvn -B package --file pom.xml
+        run: mvn -B clean package --file pom.xml
