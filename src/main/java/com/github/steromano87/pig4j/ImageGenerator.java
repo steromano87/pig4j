@@ -1,6 +1,5 @@
 package com.github.steromano87.pig4j;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.github.steromano87.pig4j.exceptions.ImageGenerationException;
 import com.github.steromano87.pig4j.exceptions.ImageWritingException;
 import com.github.steromano87.pig4j.layers.Layer;
@@ -31,7 +30,7 @@ public class ImageGenerator {
     private final int canvasWidth;
     private final int canvasHeight;
 
-    private Color backgroundColor;
+    private final Color backgroundColor;
 
     private final boolean hasAlphaChannel;
 
@@ -41,7 +40,7 @@ public class ImageGenerator {
      * @param width  the width of the image canvas, expressed in pixels
      * @param height the height of the image canvas, expressed in pixels
      */
-    public ImageGenerator(@JsonProperty("width") int width, @JsonProperty("height") int height) {
+    public ImageGenerator(int width, int height) {
         this(width, height, Color.WHITE);
     }
 
