@@ -8,6 +8,13 @@
 
     <name>pig4j (Procedural Image Generator for Java)</name>
 
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License v3.0 or later</name>
+            <url>https://opensource.org/licenses/LGPL-3.0</url>
+        </license>
+    </licenses>
+
     <scm>
         <connection>scm:git:https://github.com/steromano87/pig4j.git</connection>
         <developerConnection>scm:git:git@github.com:steromano87/pig4j.git</developerConnection>
