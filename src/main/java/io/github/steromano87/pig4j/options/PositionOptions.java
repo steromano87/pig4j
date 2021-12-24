@@ -52,9 +52,9 @@ public class PositionOptions {
         BOTTOM_CENTER(0.5, 1),
         BOTTOM_RIGHT(1, 1);
 
-        double horizRelativePosition;
+        final double horizRelativePosition;
 
-        double vertRelativePosition;
+        final double vertRelativePosition;
 
         Hook(double horizRelativePosition, double vertRelativePosition) {
             this.horizRelativePosition = horizRelativePosition;
