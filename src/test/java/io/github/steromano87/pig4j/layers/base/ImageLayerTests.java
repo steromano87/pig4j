@@ -1,7 +1,7 @@
-package io.github.steromano87.pig4j.test.layers.base;
+package io.github.steromano87.pig4j.layers.base;
 
 import io.github.steromano87.pig4j.ImageGenerator;
-import io.github.steromano87.pig4j.layers.base.ImageLayer;
+import io.github.steromano87.pig4j.transform.Anchor;
 import io.github.steromano87.pig4j.options.PositionOptions;
 import io.github.steromano87.pig4j.options.ScalingOptions;
 import org.junit.jupiter.api.Assertions;
@@ -77,7 +77,7 @@ class ImageLayerTests {
         secondImageLayer.setImageFile(secondImagePath.toFile());
 
         PositionOptions positionOptions = new PositionOptions();
-        positionOptions.setImageHook(PositionOptions.Hook.MID_CENTER);
+        positionOptions.setAnchor(Anchor.MID_CENTER);
         positionOptions.setX(320);
         positionOptions.setY(200);
         secondImageLayer.setPositionOptions(positionOptions);
@@ -109,7 +109,7 @@ class ImageLayerTests {
         secondImageLayer.setImageFile(secondImagePath.toFile());
 
         PositionOptions positionOptions = new PositionOptions();
-        positionOptions.setImageHook(PositionOptions.Hook.MID_CENTER);
+        positionOptions.setAnchor(Anchor.MID_CENTER);
         positionOptions.setX(-50);
         positionOptions.setY(200);
         secondImageLayer.setPositionOptions(positionOptions);
@@ -141,7 +141,7 @@ class ImageLayerTests {
         secondImageLayer.setImageFile(secondImagePath.toFile());
 
         PositionOptions positionOptions = new PositionOptions();
-        positionOptions.setImageHook(PositionOptions.Hook.MID_CENTER);
+        positionOptions.setAnchor(Anchor.MID_CENTER);
         positionOptions.setX(320);
         positionOptions.setY(200);
         secondImageLayer.setPositionOptions(positionOptions);
@@ -177,7 +177,7 @@ class ImageLayerTests {
         secondImageLayer.setImageFile(secondImagePath.toFile());
 
         PositionOptions positionOptions = new PositionOptions();
-        positionOptions.setImageHook(PositionOptions.Hook.MID_CENTER);
+        positionOptions.setAnchor(Anchor.MID_CENTER);
         positionOptions.setX(320);
         positionOptions.setY(200);
         secondImageLayer.setPositionOptions(positionOptions);
