@@ -2,8 +2,8 @@ package io.github.steromano87.pig4j.options;
 
 import java.awt.image.BufferedImage;
 
-import io.github.steromano87.pig4j.transform.Anchor;
-import io.github.steromano87.pig4j.transform.Translator;
+import io.github.steromano87.pig4j.tools.Anchor;
+import io.github.steromano87.pig4j.tools.Translator;
 
 @Deprecated
 public class PositionOptions {

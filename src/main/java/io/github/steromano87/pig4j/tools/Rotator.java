@@ -1,4 +1,4 @@
-package io.github.steromano87.pig4j.transform;
+package io.github.steromano87.pig4j.tools;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -6,15 +6,10 @@ import java.awt.image.BufferedImage;
 
 public class Rotator implements Transformer {
     private double angle = 0.0;
-    private Anchor anchor = Anchor.MID_CENTER;
     private boolean autoResizeCanvas = true;
 
     public void setAngle(double angle) {
         this.angle = angle;
-    }
-
-    public void setAnchor(Anchor anchor) {
-        this.anchor = anchor;
     }
 
     public void setAutoResizeCanvas(boolean autoResizeCanvas) {
@@ -36,11 +31,14 @@ public class Rotator implements Transformer {
         // Apply the rotation to the image
         Graphics2D graphics2D = outputImage.createGraphics();
         AffineTransform transform = new AffineTransform();
-        // TODO: add robust translation method to avoid slicing image when the autoResize option is enabled
+        transform.translate(
+                (this.calculateFinalImageWidth(input.getWidth(), input.getHeight()) - input.getWidth()) * 0.5,
+                (this.calculateFinalImageHeight(input.getWidth(), input.getHeight()) - input.getHeight()) * 0.5
+        );
         transform.rotate(
                 this.getAngleAsRadians(),
-                input.getWidth() * this.anchor.getHorizontalRelativePosition(),
-                input.getHeight() * this.anchor.getVerticalRelativePosition()
+                input.getWidth() * 0.5,
+                input.getHeight() * 0.5
         );
         graphics2D.setTransform(transform);
         graphics2D.drawImage(input, 0, 0, null);

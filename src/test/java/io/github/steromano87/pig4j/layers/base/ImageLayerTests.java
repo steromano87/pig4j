@@ -1,7 +1,7 @@
 package io.github.steromano87.pig4j.layers.base;
 
 import io.github.steromano87.pig4j.ImageGenerator;
-import io.github.steromano87.pig4j.transform.Anchor;
+import io.github.steromano87.pig4j.tools.Anchor;
 import io.github.steromano87.pig4j.options.PositionOptions;
 import io.github.steromano87.pig4j.options.ScalingOptions;
 import org.junit.jupiter.api.Assertions;

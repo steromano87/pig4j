@@ -1,8 +1,8 @@
 package io.github.steromano87.pig4j.layers.transform;
 
 import io.github.steromano87.pig4j.layers.Layer;
-import io.github.steromano87.pig4j.transform.Scaler;
-import io.github.steromano87.pig4j.transform.ScalingAlgorithm;
+import io.github.steromano87.pig4j.tools.Scaler;
+import io.github.steromano87.pig4j.tools.ScalingAlgorithm;
 
 import java.awt.image.BufferedImage;
 

@@ -1,4 +1,4 @@
-package io.github.steromano87.pig4j.transform;
+package io.github.steromano87.pig4j.tools;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -65,35 +65,6 @@ class RotatorTests {
         );
         rotator.setAngle(30);
         rotator.setAutoResizeCanvas(true);
-
-        BufferedImage outputImage = rotator.transform(inputImage);
-
-        double sin = Math.abs(Math.sin(Math.toRadians(30)));
-        double cos = Math.abs(Math.cos(Math.toRadians(30)));
-
-        int expectedImageWidth = (int) Math.floor(
-                inputImage.getWidth() * cos + inputImage.getHeight() * sin
-        );
-
-        int expectedImageHeight = (int) Math.floor(
-                inputImage.getWidth() * sin + inputImage.getHeight() * cos
-        );
-
-        Assertions.assertAll(
-                () -> Assertions.assertEquals(expectedImageWidth, outputImage.getWidth()),
-                () -> Assertions.assertEquals(expectedImageHeight, outputImage.getHeight())
-        );
-    }
-
-    @Test
-    void RotationWithTopLeftAnchorTest() throws IOException {
-        Rotator rotator = new Rotator();
-        BufferedImage inputImage = ImageIO.read(
-                Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
-        );
-        rotator.setAngle(30);
-        rotator.setAutoResizeCanvas(true);
-        rotator.setAnchor(Anchor.TOP_LEFT);
 
         BufferedImage outputImage = rotator.transform(inputImage);
 
