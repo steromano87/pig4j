@@ -16,7 +16,7 @@ class RotatorTests {
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
         );
 
-        BufferedImage outputImage = rotator.transform(inputImage);
+        BufferedImage outputImage = rotator.rotate(inputImage);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(inputImage.getWidth(), outputImage.getWidth()),
@@ -32,7 +32,7 @@ class RotatorTests {
         );
 
         rotator.setAngle(360);
-        BufferedImage outputImage = rotator.transform(inputImage);
+        BufferedImage outputImage = rotator.rotate(inputImage);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(inputImage.getWidth(), outputImage.getWidth()),
@@ -49,7 +49,7 @@ class RotatorTests {
         rotator.setAngle(30);
         rotator.setAutoResizeCanvas(false);
 
-        BufferedImage outputImage = rotator.transform(inputImage);
+        BufferedImage outputImage = rotator.rotate(inputImage);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(inputImage.getWidth(), outputImage.getWidth()),
@@ -66,7 +66,7 @@ class RotatorTests {
         rotator.setAngle(30);
         rotator.setAutoResizeCanvas(true);
 
-        BufferedImage outputImage = rotator.transform(inputImage);
+        BufferedImage outputImage = rotator.rotate(inputImage);
 
         double sin = Math.abs(Math.sin(Math.toRadians(30)));
         double cos = Math.abs(Math.cos(Math.toRadians(30)));
@@ -94,7 +94,7 @@ class RotatorTests {
         rotator.setAngle(-30);
         rotator.setAutoResizeCanvas(true);
 
-        BufferedImage outputImage = rotator.transform(inputImage);
+        BufferedImage outputImage = rotator.rotate(inputImage);
 
         double sin = Math.abs(Math.sin(Math.toRadians(-30)));
         double cos = Math.abs(Math.cos(Math.toRadians(-30)));

@@ -31,6 +31,6 @@ public class PositionOptions {
 
     public BufferedImage apply(BufferedImage bgImage, BufferedImage fgImage) {
         this.translator.overrideCanvasSize(bgImage.getWidth(), bgImage.getHeight());
-        return this.translator.transform(fgImage);
+        return this.translator.translate(fgImage);
     }
 }

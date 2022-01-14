@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-public class Translator implements Transformer {
+public class Translator {
     private int x = 0;
     private int y = 0;
     private Anchor anchor = Anchor.TOP_LEFT;
@@ -35,8 +35,7 @@ public class Translator implements Transformer {
         this.setAutoResizeCanvas(false);
     }
 
-    @Override
-    public BufferedImage transform(BufferedImage input) {
+    public BufferedImage translate(BufferedImage input) {
         if (this.isNoOp(input)) {
             return input;
         }

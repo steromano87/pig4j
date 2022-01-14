@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class Scaler implements Transformer {
+public class Scaler {
     private Integer width;
     private Integer height;
     private Double scaleX = 1.0;
@@ -71,8 +71,7 @@ public class Scaler implements Transformer {
         this.scalingAlgorithm = algorithm;
     }
 
-    @Override
-    public BufferedImage transform(BufferedImage image) {
+    public BufferedImage scale(BufferedImage image) {
         // If the scaler is working in no-op mode, immediately return the original image without further elaboration
         if (this.isNoOp(image)) {
             return image;

@@ -16,7 +16,7 @@ class TranslatorTests {
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
         );
 
-        BufferedImage outputImage = translator.transform(inputImage);
+        BufferedImage outputImage = translator.translate(inputImage);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(inputImage.getWidth(), outputImage.getWidth()),
@@ -34,7 +34,7 @@ class TranslatorTests {
         translator.setX(200);
         translator.setY(100);
 
-        BufferedImage outputImage = translator.transform(inputImage);
+        BufferedImage outputImage = translator.translate(inputImage);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(inputImage.getWidth(), outputImage.getWidth()),
@@ -52,7 +52,7 @@ class TranslatorTests {
         translator.setX(200);
         translator.setY(100);
 
-        BufferedImage outputImage = translator.transform(inputImage);
+        BufferedImage outputImage = translator.translate(inputImage);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(inputImage.getWidth() + 200, outputImage.getWidth()),

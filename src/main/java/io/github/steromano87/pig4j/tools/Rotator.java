@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class Rotator implements Transformer {
+public class Rotator {
     private double angle = 0.0;
     private boolean autoResizeCanvas = true;
 
@@ -16,8 +16,7 @@ public class Rotator implements Transformer {
         this.autoResizeCanvas = autoResizeCanvas;
     }
 
-    @Override
-    public BufferedImage transform(BufferedImage input) {
+    public BufferedImage rotate(BufferedImage input) {
         if (this.isNoOp()) {
             return input;
         }

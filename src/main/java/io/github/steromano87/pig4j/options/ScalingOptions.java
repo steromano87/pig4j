@@ -47,6 +47,6 @@ public class ScalingOptions {
     }
 
     public BufferedImage apply(BufferedImage image) {
-        return this.scaler.transform(image);
+        return this.scaler.scale(image);
     }
 }

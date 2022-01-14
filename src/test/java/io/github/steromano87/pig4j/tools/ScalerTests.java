@@ -16,7 +16,7 @@ class ScalerTests {
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
         );
 
-        BufferedImage outputImage = scaler.transform(inputImage);
+        BufferedImage outputImage = scaler.scale(inputImage);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(inputImage.getWidth(), outputImage.getWidth()),
@@ -34,7 +34,7 @@ class ScalerTests {
         scaler.setScalingAlgorithm(ScalingAlgorithm.AUTO);
         scaler.setScale(2.0);
 
-        BufferedImage outputImage = scaler.transform(inputImage);
+        BufferedImage outputImage = scaler.scale(inputImage);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(inputImage.getWidth() * 2, outputImage.getWidth()),
@@ -52,7 +52,7 @@ class ScalerTests {
         scaler.setScalingAlgorithm(ScalingAlgorithm.AUTO);
         scaler.setScale(0.6);
 
-        BufferedImage outputImage = scaler.transform(inputImage);
+        BufferedImage outputImage = scaler.scale(inputImage);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(inputImage.getWidth() * 0.6, outputImage.getWidth()),
@@ -71,7 +71,7 @@ class ScalerTests {
         scaler.setScaleX(0.8);
         scaler.setScaleY(1.4);
 
-        BufferedImage outputImage = scaler.transform(inputImage);
+        BufferedImage outputImage = scaler.scale(inputImage);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(inputImage.getWidth() * 0.8, outputImage.getWidth()),
