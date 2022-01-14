@@ -1,52 +1,51 @@
 package io.github.steromano87.pig4j.layers.transform;
 
 import io.github.steromano87.pig4j.layers.Layer;
-import io.github.steromano87.pig4j.tools.Scaler;
-import io.github.steromano87.pig4j.tools.ScalingAlgorithm;
+import io.github.steromano87.pig4j.options.ScalingOptions;
 
 import java.awt.image.BufferedImage;
 
 
 public class ScalingLayer implements Layer {
-    private final Scaler scaler = new Scaler();
+    private final ScalingOptions scalingOptions = new ScalingOptions();
 
     public ScalingLayer setWidth(int width) {
-        this.scaler.setWidth(width);
+        this.scalingOptions.setWidth(width);
         return this;
     }
 
     public ScalingLayer setHeight(int height) {
-        this.scaler.setHeight(height);
+        this.scalingOptions.setHeight(height);
         return this;
     }
 
     public ScalingLayer setScaleX(double scale) {
-        this.scaler.setScaleX(scale);
+        this.scalingOptions.setScaleX(scale);
         return this;
     }
 
     public ScalingLayer setScaleY(double scale) {
-        this.scaler.setScaleY(scale);
+        this.scalingOptions.setScaleY(scale);
         return this;
     }
 
     public ScalingLayer setScale(double scale) {
-        this.scaler.setScale(scale);
+        this.scalingOptions.setScale(scale);
         return this;
     }
 
     public ScalingLayer setUniformScaling(boolean uniformScaling) {
-        this.scaler.setUniformScaling(uniformScaling);
+        this.scalingOptions.setUniformScaling(uniformScaling);
         return this;
     }
 
-    public ScalingLayer setScalingAlgorithm(ScalingAlgorithm algorithm) {
-        this.scaler.setScalingAlgorithm(algorithm);
+    public ScalingLayer setScalingAlgorithm(ScalingOptions.Algorithm algorithm) {
+        this.scalingOptions.setScalingAlgorithm(algorithm);
         return this;
     }
 
     @Override
     public BufferedImage apply(BufferedImage image) {
-        return this.scaler.scale(image);
+        return this.scalingOptions.scale(image);
     }
 }

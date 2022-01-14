@@ -1,6 +1,8 @@
 package io.github.steromano87.pig4j.options;
 
 
+import io.github.steromano87.pig4j.exceptions.ImageGenerationException;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
@@ -30,7 +32,18 @@ public class BlendingOptions {
      * @param fgImage foreground image
      * @return the blended image
      */
-    public BufferedImage apply(BufferedImage bgImage, BufferedImage fgImage) {
+    public BufferedImage blend(BufferedImage fgImage, BufferedImage bgImage) {
+        if (fgImage.getHeight() != bgImage.getHeight() || fgImage.getWidth() != bgImage.getWidth()) {
+            throw new ImageGenerationException(
+                    String.format(
+                            "Only image with same width and height can be blended; " +
+                                    "foreground image: %d x %d, background image: %d x %d",
+                            fgImage.getWidth(), fgImage.getHeight(),
+                            bgImage.getWidth(), bgImage.getHeight()
+                    )
+            );
+        }
+
         boolean hasTransparency = bgImage.getColorModel().hasAlpha();
         int imageType = hasTransparency ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB;
         BufferedImage outputImage = new BufferedImage(bgImage.getWidth(), bgImage.getHeight(), imageType);

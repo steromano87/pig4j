@@ -1,5 +1,10 @@
 package io.github.steromano87.pig4j.layers;
 
+import io.github.steromano87.pig4j.options.BlendingOptions;
+import io.github.steromano87.pig4j.options.PositionOptions;
+import io.github.steromano87.pig4j.options.RotationOptions;
+import io.github.steromano87.pig4j.options.ScalingOptions;
+
 import java.awt.image.BufferedImage;
 
 /**
@@ -16,4 +21,24 @@ public interface Layer {
      * @return the image after being processed by the layer
      */
     BufferedImage apply(BufferedImage image);
+
+    default BufferedImage applyOptionsStack(
+            BufferedImage generatedImage,
+            BufferedImage bgImage,
+            ScalingOptions scalingOptions,
+            RotationOptions rotationOptions,
+            PositionOptions positionOptions,
+            BlendingOptions blendingOptions
+    ) {
+        BufferedImage scaledAndRotated = rotationOptions.rotate(
+                scalingOptions.scale(generatedImage)
+        );
+
+        positionOptions.overrideCanvasSize(bgImage.getWidth(), bgImage.getHeight());
+
+        return blendingOptions.blend(
+                positionOptions.translate(scaledAndRotated),
+                bgImage
+        );
+    }
 }

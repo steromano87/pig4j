@@ -4,6 +4,7 @@ import io.github.steromano87.pig4j.exceptions.ImageReadingException;
 import io.github.steromano87.pig4j.layers.Layer;
 import io.github.steromano87.pig4j.options.BlendingOptions;
 import io.github.steromano87.pig4j.options.PositionOptions;
+import io.github.steromano87.pig4j.options.RotationOptions;
 import io.github.steromano87.pig4j.options.ScalingOptions;
 
 import javax.imageio.ImageIO;
@@ -24,6 +25,7 @@ public class ImageLayer implements Layer {
     private String imageBase64;
 
     private ScalingOptions scalingOptions = new ScalingOptions();
+    private RotationOptions rotationOptions = new RotationOptions();
     private PositionOptions positionOptions = new PositionOptions();
     private BlendingOptions blendingOptions = new BlendingOptions();
 
@@ -71,6 +73,10 @@ public class ImageLayer implements Layer {
         return this.scalingOptions;
     }
 
+    public RotationOptions getRotationOptions() {
+        return rotationOptions;
+    }
+
     public PositionOptions getPositionOptions() {
         return this.positionOptions;
     }
@@ -81,6 +87,11 @@ public class ImageLayer implements Layer {
 
     public ImageLayer setScalingOptions(ScalingOptions scalingOptions) {
         this.scalingOptions = scalingOptions;
+        return this;
+    }
+
+    public ImageLayer setRotationOptions(RotationOptions rotationOptions) {
+        this.rotationOptions = rotationOptions;
         return this;
     }
 
@@ -97,12 +108,14 @@ public class ImageLayer implements Layer {
     @Override
     public BufferedImage apply(BufferedImage image) {
         this.checkStateConsistency();
-        return this.blendingOptions.apply(
+
+        return this.applyOptionsStack(
+                this.sourceImage,
                 image,
-                this.positionOptions.apply(
-                        image,
-                        this.scalingOptions.apply(this.sourceImage)
-                )
+                this.scalingOptions,
+                this.rotationOptions,
+                this.positionOptions,
+                this.blendingOptions
         );
     }
 

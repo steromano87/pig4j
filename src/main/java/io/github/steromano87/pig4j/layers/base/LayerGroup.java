@@ -3,6 +3,7 @@ package io.github.steromano87.pig4j.layers.base;
 import io.github.steromano87.pig4j.layers.Layer;
 import io.github.steromano87.pig4j.options.BlendingOptions;
 import io.github.steromano87.pig4j.options.PositionOptions;
+import io.github.steromano87.pig4j.options.RotationOptions;
 import io.github.steromano87.pig4j.options.ScalingOptions;
 
 import java.awt.image.BufferedImage;
@@ -14,6 +15,7 @@ public class LayerGroup implements Layer {
     private List<Layer> layers = new ArrayList<>();
 
     private ScalingOptions scalingOptions = new ScalingOptions();
+    private RotationOptions rotationOptions = new RotationOptions();
     private PositionOptions positionOptions = new PositionOptions();
     private BlendingOptions blendingOptions = new BlendingOptions();
 
@@ -25,8 +27,29 @@ public class LayerGroup implements Layer {
         this.layers.add(layer);
     }
 
+    public ScalingOptions getScalingOptions() {
+        return scalingOptions;
+    }
+
+    public RotationOptions getRotationOptions() {
+        return rotationOptions;
+    }
+
+    public PositionOptions getPositionOptions() {
+        return positionOptions;
+    }
+
+    public BlendingOptions getBlendingOptions() {
+        return blendingOptions;
+    }
+
     public LayerGroup setScalingOptions(ScalingOptions scalingOptions) {
         this.scalingOptions = scalingOptions;
+        return this;
+    }
+
+    public LayerGroup setRotationOptions(RotationOptions rotationOptions) {
+        this.rotationOptions = rotationOptions;
         return this;
     }
 
@@ -50,12 +73,13 @@ public class LayerGroup implements Layer {
             layer.apply(layerCanvas);
         }
 
-        return this.blendingOptions.apply(
+        return this.applyOptionsStack(
+                layerCanvas,
                 image,
-                this.positionOptions.apply(
-                        image,
-                        this.scalingOptions.apply(layerCanvas)
-                )
+                this.scalingOptions,
+                this.rotationOptions,
+                this.positionOptions,
+                this.blendingOptions
         );
     }
 }

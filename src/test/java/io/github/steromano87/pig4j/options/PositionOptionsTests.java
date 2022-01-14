@@ -1,4 +1,4 @@
-package io.github.steromano87.pig4j.tools;
+package io.github.steromano87.pig4j.options;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -8,15 +8,15 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.nio.file.Paths;
 
-class TranslatorTests {
+class PositionOptionsTests {
     @Test
     void NoOpTranslationTest() throws IOException {
-        Translator translator = new Translator();
+        PositionOptions positionOptions = new PositionOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
         );
 
-        BufferedImage outputImage = translator.translate(inputImage);
+        BufferedImage outputImage = positionOptions.translate(inputImage);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(inputImage.getWidth(), outputImage.getWidth()),
@@ -26,15 +26,15 @@ class TranslatorTests {
 
     @Test
     void TranslationWithNoAutoResizeTest() throws IOException {
-        Translator translator = new Translator();
+        PositionOptions positionOptions = new PositionOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
         );
-        translator.setAutoResizeCanvas(false);
-        translator.setX(200);
-        translator.setY(100);
+        positionOptions.setAutoResizeCanvas(false);
+        positionOptions.setX(200);
+        positionOptions.setY(100);
 
-        BufferedImage outputImage = translator.translate(inputImage);
+        BufferedImage outputImage = positionOptions.translate(inputImage);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(inputImage.getWidth(), outputImage.getWidth()),
@@ -44,15 +44,15 @@ class TranslatorTests {
 
     @Test
     void TranslationWithAutoResizeTest() throws IOException {
-        Translator translator = new Translator();
+        PositionOptions positionOptions = new PositionOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
         );
-        translator.setAutoResizeCanvas(true);
-        translator.setX(200);
-        translator.setY(100);
+        positionOptions.setAutoResizeCanvas(true);
+        positionOptions.setX(200);
+        positionOptions.setY(100);
 
-        BufferedImage outputImage = translator.translate(inputImage);
+        BufferedImage outputImage = positionOptions.translate(inputImage);
 
         Assertions.assertAll(
                 () -> Assertions.assertEquals(inputImage.getWidth() + 200, outputImage.getWidth()),

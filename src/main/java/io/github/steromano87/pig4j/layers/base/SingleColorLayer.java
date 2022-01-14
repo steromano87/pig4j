@@ -33,6 +33,6 @@ public class SingleColorLayer implements Layer {
         graphics2D.dispose();
 
         // Apply fusion options
-        return this.blendingOptions.apply(image, outputImage);
+        return this.blendingOptions.blend(image, outputImage);
     }
 }

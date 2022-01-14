@@ -1,10 +1,10 @@
-package io.github.steromano87.pig4j.tools;
+package io.github.steromano87.pig4j.options;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-public class Rotator {
+public class RotationOptions {
     private double angle = 0.0;
     private boolean autoResizeCanvas = true;
 

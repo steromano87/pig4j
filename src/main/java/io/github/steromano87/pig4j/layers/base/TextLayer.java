@@ -3,6 +3,7 @@ package io.github.steromano87.pig4j.layers.base;
 import io.github.steromano87.pig4j.layers.Layer;
 import io.github.steromano87.pig4j.options.BlendingOptions;
 import io.github.steromano87.pig4j.options.PositionOptions;
+import io.github.steromano87.pig4j.options.RotationOptions;
 import io.github.steromano87.pig4j.options.ScalingOptions;
 
 import java.awt.*;
@@ -18,6 +19,7 @@ public class TextLayer implements Layer {
     private Color color = Color.BLACK;
 
     private ScalingOptions scalingOptions = new ScalingOptions();
+    private RotationOptions rotationOptions = new RotationOptions();
     private PositionOptions positionOptions = new PositionOptions();
     private BlendingOptions blendingOptions = new BlendingOptions();
 
@@ -66,8 +68,29 @@ public class TextLayer implements Layer {
         return color;
     }
 
+    public ScalingOptions getScalingOptions() {
+        return scalingOptions;
+    }
+
+    public RotationOptions getRotationOptions() {
+        return rotationOptions;
+    }
+
+    public PositionOptions getPositionOptions() {
+        return positionOptions;
+    }
+
+    public BlendingOptions getBlendingOptions() {
+        return blendingOptions;
+    }
+
     public TextLayer setScalingOptions(ScalingOptions scalingOptions) {
         this.scalingOptions = scalingOptions;
+        return this;
+    }
+
+    public TextLayer setRotationOptions(RotationOptions rotationOptions) {
+        this.rotationOptions = rotationOptions;
         return this;
     }
 
@@ -102,12 +125,13 @@ public class TextLayer implements Layer {
         graphics2D.dispose();
 
         // Apply the options to blend the text with the background image
-        return this.blendingOptions.apply(
+        return this.applyOptionsStack(
+                textImage,
                 image,
-                this.positionOptions.apply(
-                        image,
-                        this.scalingOptions.apply(textImage)
-                )
+                this.scalingOptions,
+                this.rotationOptions,
+                this.positionOptions,
+                this.blendingOptions
         );
     }
 }
