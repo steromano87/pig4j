@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GroupingLayer implements Layer {
+public class LayerGroup implements Layer {
     private List<Layer> layers = new ArrayList<>();
 
     private ScalingOptions scalingOptions = new ScalingOptions();
@@ -25,17 +25,17 @@ public class GroupingLayer implements Layer {
         this.layers.add(layer);
     }
 
-    public GroupingLayer setScalingOptions(ScalingOptions scalingOptions) {
+    public LayerGroup setScalingOptions(ScalingOptions scalingOptions) {
         this.scalingOptions = scalingOptions;
         return this;
     }
 
-    public GroupingLayer setPositionOptions(PositionOptions positionOptions) {
+    public LayerGroup setPositionOptions(PositionOptions positionOptions) {
         this.positionOptions = positionOptions;
         return this;
     }
 
-    public GroupingLayer setBlendingOptions(BlendingOptions blendingOptions) {
+    public LayerGroup setBlendingOptions(BlendingOptions blendingOptions) {
         this.blendingOptions = blendingOptions;
         return this;
     }
