@@ -127,6 +127,9 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludePackageNames>com.jhlabs.*</excludePackageNames>
+                </configuration>
             </plugin>
 
 
