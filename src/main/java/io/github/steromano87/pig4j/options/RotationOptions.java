@@ -4,18 +4,45 @@ import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
+/**
+ * Class that holds options to apply an in-plane rotation to an image.
+ * <p>
+ * Rotations are always applied to the center of an image.
+ */
 public class RotationOptions {
     private double angle = 0.0;
     private boolean autoResizeCanvas = true;
 
+    /**
+     * Sets the rotation angle. A positive value means an anti-clockwise rotation.
+     *
+     * @param angle the rotation angle, expressed in degrees.
+     */
     public void setAngle(double angle) {
         this.angle = angle;
     }
 
+    /**
+     * Specifies if the canvas should automatically resize to fit the new image position.
+     * <p>
+     * If the autoresize option is off, part of the element may exceed image limits
+     * and will be trimmed from the rendered image.
+     * <p>
+     * If the autoresize option is on, the rendered image size will be adapted to fit the exceeding part of the image.
+     * This option will have no effect if the superimposed element already fits the existing canvas.
+     *
+     * @param autoResizeCanvas if the autoresize option is turned on
+     */
     public void setAutoResizeCanvas(boolean autoResizeCanvas) {
         this.autoResizeCanvas = autoResizeCanvas;
     }
 
+    /**
+     * Rotates the given image.
+     *
+     * @param input the target image
+     * @return the rotated image
+     */
     public BufferedImage rotate(BufferedImage input) {
         if (this.isNoOp()) {
             return input;

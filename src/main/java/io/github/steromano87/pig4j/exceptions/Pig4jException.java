@@ -1,5 +1,8 @@
 package io.github.steromano87.pig4j.exceptions;
 
+/**
+ * The base exception class of Pig4j library.
+ */
 public class Pig4jException extends RuntimeException {
     public Pig4jException() {
     }

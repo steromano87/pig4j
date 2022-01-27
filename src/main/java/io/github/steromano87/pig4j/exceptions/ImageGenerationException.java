@@ -1,5 +1,8 @@
 package io.github.steromano87.pig4j.exceptions;
 
+/**
+ * Exception thrown when an error is encountered while generating the final image.
+ */
 public class ImageGenerationException extends Pig4jException {
     public ImageGenerationException() {
     }

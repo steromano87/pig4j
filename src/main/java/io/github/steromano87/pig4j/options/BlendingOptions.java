@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.Objects;
 
 /**
- * Class that holds options used to blend two images together
+ * Class that holds options used to blend two images together.
  */
 public class BlendingOptions {
     private float alpha = 1.0f;
@@ -76,7 +76,7 @@ public class BlendingOptions {
 
     /**
      * Blending method used while joining images
-     *
+     * <p>
      * WIP: currently only the NORMAL method is implicitly used
      */
     public enum Method {

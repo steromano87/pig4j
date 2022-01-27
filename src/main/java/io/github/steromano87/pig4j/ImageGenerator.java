@@ -89,18 +89,40 @@ public class ImageGenerator {
         return this;
     }
 
+    /**
+     * Returns the final image canvas width.
+     *
+     * @return the canvas width.
+     */
     public int getCanvasWidth() {
         return this.canvasWidth;
     }
 
+    /**
+     * Returns the final image canvas height.
+     *
+     * @return the canvas height
+     */
     public int getCanvasHeight() {
         return this.canvasHeight;
     }
 
+    /**
+     * Returns the background color of the canvas.
+     * <p>
+     * The initial background color may differ from the final one if it is overwritten by a specific layer.
+     *
+     * @return the initial background color
+     */
     public Color getBackgroundColor() {
         return this.backgroundColor;
     }
 
+    /**
+     * Determines if the final image has an alpha channel, i.e. if it supports transparency.
+     *
+     * @return whether the final image has an alpha channel
+     */
     public boolean hasAlphaChannel() {
         return this.hasAlphaChannel;
     }
@@ -112,7 +134,7 @@ public class ImageGenerator {
      * the image generation can be called lazily only when the final output is required.
      * <p>
      * The image generation process is non-destructive, i.e. if after the first generation the user wants
-     * to add another layer and re-generate the image, existing layers will e preserved.
+     * to add another layer and re-generate the image, existing layers will be preserved.
      *
      * @return the image generator instance, using builder pattern
      * @throws ImageGenerationException if there are errors during image generation

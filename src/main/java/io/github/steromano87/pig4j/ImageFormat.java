@@ -4,10 +4,29 @@ package io.github.steromano87.pig4j;
  * Image formats managed by pig4j as output formats
  */
 public enum ImageFormat {
+    /**
+     * Bitmap image format
+     */
     BMP("bmp", "image/bmp"),
+
+    /**
+     * JPEG image format
+     */
     JPEG("jpg", "image/jpeg"),
+
+    /**
+     * TIFF image format
+     */
     TIFF("tif", "image/tiff"),
+
+    /**
+     * GIF image format (without animations)
+     */
     GIF("gif", "image/gif"),
+
+    /**
+     * PNG image format
+     */
     PNG("png", "image/png");
 
     private final String extension;

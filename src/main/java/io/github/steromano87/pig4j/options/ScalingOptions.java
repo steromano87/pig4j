@@ -7,9 +7,9 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * Class that holds the scaling options used when merging two images together
- *
- * The option defines how an image with an arbitrary size is fitted on an existing canvas
+ * Class that holds the scaling options used when merging two images together.
+ * <p>
+ * The option defines how an image with an arbitrary size is fitted on an existing canvas.
  */
 public class ScalingOptions {
     private Integer width;
@@ -20,6 +20,13 @@ public class ScalingOptions {
     private boolean uniformScaling = true;
     private Algorithm algorithm = Algorithm.AUTO;
 
+    /**
+     * Sets the final width of the image.
+     * <p>
+     * If the uniform scaling is enabled, the height of the image will be adapted to preserve the aspect ratio.
+     *
+     * @param width the target width of the image
+     */
     public void setWidth(int width) {
         if (this.uniformScaling) {
             this.height = null;
@@ -28,6 +35,13 @@ public class ScalingOptions {
         this.blankScales();
     }
 
+    /**
+     * Sets the final height of the image.
+     * <p>
+     * If the uniform scaling is enabled, the width of the image will be adapted to preserve the aspect ratio.
+     *
+     * @param height the target height of the image
+     */
     public void setHeight(int height) {
         if (this.uniformScaling) {
             this.width = null;
@@ -36,6 +50,14 @@ public class ScalingOptions {
         this.blankScales();
     }
 
+    /**
+     * Sets the horizontal scaling factor of the image.
+     * <p>
+     * This method cannot be used if the uniform scaling is enabled (use {@link ScalingOptions#setScale instead}
+     *
+     * @param scale the target horizontal scale of the image
+     * @throws IllegalStateException if the method is called when the uniform scaling option is on
+     */
     public void setScaleX(double scale) {
         if (this.uniformScaling) {
             throw new IllegalStateException("Cannot set single-axis scale if the uniform scaling option is active");
@@ -49,6 +71,14 @@ public class ScalingOptions {
         this.blankSizes();
     }
 
+    /**
+     * Sets the vertical scaling factor of the image.
+     * <p>
+     * This method cannot be used if the uniform scaling is enabled (use {@link ScalingOptions#setScale instead}
+     *
+     * @param scale the target vertical scale of the image
+     * @throws IllegalStateException if the method is called when the uniform scaling option is on
+     */
     public void setScaleY(double scale) {
         if (this.uniformScaling) {
             throw new IllegalStateException("Cannot set single-axis scale if the uniform scaling option is active");
@@ -62,20 +92,44 @@ public class ScalingOptions {
         this.blankSizes();
     }
 
+    /**
+     * Sets the horizontal and vertical scaling of the image.
+     *
+     * @param scale the target scale of the image.
+     */
     public void setScale(double scale) {
         this.scaleX = scale;
         this.scaleY = scale;
         this.blankSizes();
     }
 
+    /**
+     * Specifies if the aspect ratio of the image should be preserved during scaling.
+     * <p>
+     * If this option is turned on, the image can be shrunk or enlarged only along one axis.
+     *
+     * @param uniformScaling whether the aspect ratio should be preserved or not during the image scaling
+     */
     public void setUniformScaling(boolean uniformScaling) {
         this.uniformScaling = uniformScaling;
     }
 
+    /**
+     * Sets the scaling algorithm to use.
+     *
+     * @param algorithm the scaling algorithm
+     * @see Algorithm
+     */
     public void setScalingAlgorithm(Algorithm algorithm) {
         this.algorithm = algorithm;
     }
 
+    /**
+     * Scales the image.
+     *
+     * @param image the input image
+     * @return the scaled image
+     */
     public BufferedImage scale(BufferedImage image) {
         // If the scaler is working in no-op mode, immediately return the original image without further elaboration
         if (this.isNoOp(image)) {
@@ -231,10 +285,32 @@ public class ScalingOptions {
         }
     }
 
+    /**
+     * Scaling algorithm to be used while shrinking or enlarging the image.
+     */
     public enum Algorithm {
+        /**
+         * Automatic selection of the algorithm:
+         * <ul>
+         *     <li>if the image is enlarged, the bicubic algorithm will be used</li>
+         *     <li>if the image is shrunk, the bilinear algorithm will be used</li>
+         * </ul>
+         */
         AUTO(null),
+
+        /**
+         * Bicubic algorithm. More precise but slower.
+         */
         BICUBIC(RenderingHints.VALUE_INTERPOLATION_BICUBIC),
+
+        /**
+         * Bilinear algorithm. Medium precision but faster than bicubic.
+         */
         BILINEAR(RenderingHints.VALUE_INTERPOLATION_BILINEAR),
+
+        /**
+         * Nearest neighbor algorithm. The fastest, but the worse in terms of quality.
+         */
         NEAREST_NEIGHBOR(RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
 
         private final Object renderingHintValue;
@@ -243,6 +319,12 @@ public class ScalingOptions {
             this.renderingHintValue = renderingHintValue;
         }
 
+        /**
+         * Returns the associated rendering hint.
+         *
+         * @return the corresponding rendering hint
+         * @see RenderingHints
+         */
         public Object getRenderingHint() {
             return this.renderingHintValue;
         }
