@@ -151,6 +151,11 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>com/jhlabs/**</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>
