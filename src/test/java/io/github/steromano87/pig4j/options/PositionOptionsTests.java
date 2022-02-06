@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 class PositionOptionsTests {
     @Test
-    void NoOpTranslationTest() throws IOException {
+    void testNoOpTranslation() throws IOException {
         PositionOptions positionOptions = new PositionOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
@@ -25,7 +25,7 @@ class PositionOptionsTests {
     }
 
     @Test
-    void TranslationWithNoAutoResizeTest() throws IOException {
+    void testTranslationWithNoAutoResize() throws IOException {
         PositionOptions positionOptions = new PositionOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
@@ -43,7 +43,7 @@ class PositionOptionsTests {
     }
 
     @Test
-    void TranslationWithAutoResizeTest() throws IOException {
+    void testTranslationWithAutoResize() throws IOException {
         PositionOptions positionOptions = new PositionOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()

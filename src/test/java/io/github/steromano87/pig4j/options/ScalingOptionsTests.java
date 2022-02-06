@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 class ScalingOptionsTests {
     @Test
-    void NoOpScalingTest() throws IOException {
+    void testNoOpScaling() throws IOException {
         ScalingOptions scalingOptions = new ScalingOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
@@ -25,7 +25,7 @@ class ScalingOptionsTests {
     }
 
     @Test
-    void EnlargementWithAutoAlgorithmScalingTest() throws IOException {
+    void testEnlargementWithAutoAlgorithmScaling() throws IOException {
         ScalingOptions scalingOptions = new ScalingOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
@@ -43,7 +43,7 @@ class ScalingOptionsTests {
     }
 
     @Test
-    void ShrinkingWithAutoAlgorithmScalingTest() throws IOException {
+    void testShrinkingWithAutoAlgorithmScaling() throws IOException {
         ScalingOptions scalingOptions = new ScalingOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
@@ -61,7 +61,7 @@ class ScalingOptionsTests {
     }
 
     @Test
-    void NonUniformScalingTest() throws IOException {
+    void testNonUniformScaling() throws IOException {
         ScalingOptions scalingOptions = new ScalingOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
@@ -80,7 +80,7 @@ class ScalingOptionsTests {
     }
 
     @Test
-    void ExceptionRaisedWhenSettingSingleAxisScaleWithUniformScalingTest() {
+    void testExceptionRaisedWhenSettingSingleAxisScaleWithUniformScaling() {
         ScalingOptions scalingOptions = new ScalingOptions();
         scalingOptions.setUniformScaling(true);
 

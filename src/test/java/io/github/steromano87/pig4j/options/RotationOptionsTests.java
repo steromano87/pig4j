@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 
 class RotationOptionsTests {
     @Test
-    void NoOpZeroDegreesRotationTest() throws IOException {
+    void testNoOpZeroDegreesRotation() throws IOException {
         RotationOptions rotationOptions = new RotationOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
@@ -25,7 +25,7 @@ class RotationOptionsTests {
     }
 
     @Test
-    void NoOp360DegreesRotationTest() throws IOException {
+    void testNoOp360DegreesRotation() throws IOException {
         RotationOptions rotationOptions = new RotationOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
@@ -41,7 +41,7 @@ class RotationOptionsTests {
     }
 
     @Test
-    void RotationWithNoAutoResizeTest() throws IOException {
+    void testRotationWithNoAutoResize() throws IOException {
         RotationOptions rotationOptions = new RotationOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
@@ -58,7 +58,7 @@ class RotationOptionsTests {
     }
 
     @Test
-    void RotationWithAutoResizeTest() throws IOException {
+    void testRotationWithAutoResize() throws IOException {
         RotationOptions rotationOptions = new RotationOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
@@ -86,7 +86,7 @@ class RotationOptionsTests {
     }
 
     @Test
-    void RotationWithNegativeAnglesTest() throws IOException {
+    void testRotationWithNegativeAngles() throws IOException {
         RotationOptions rotationOptions = new RotationOptions();
         BufferedImage inputImage = ImageIO.read(
                 Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
