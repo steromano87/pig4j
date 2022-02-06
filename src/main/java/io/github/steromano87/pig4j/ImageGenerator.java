@@ -3,6 +3,7 @@ package io.github.steromano87.pig4j;
 import io.github.steromano87.pig4j.exceptions.ImageGenerationException;
 import io.github.steromano87.pig4j.exceptions.ImageWritingException;
 import io.github.steromano87.pig4j.layers.Layer;
+import io.github.steromano87.pig4j.layers.LayerPipeline;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -11,7 +12,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Objects;
 
@@ -24,14 +24,14 @@ import java.util.Objects;
  * @see Layer
  */
 public class ImageGenerator {
-    private final ArrayList<Layer> layers = new ArrayList<>();
-
     private BufferedImage processedImage;
+    private boolean forcedCacheInvalidation = false;
+
+    private final LayerPipeline layerPipeline = new LayerPipeline();
     private final int canvasWidth;
     private final int canvasHeight;
 
     private final Color backgroundColor;
-
     private final boolean hasAlphaChannel;
 
     /**
@@ -85,7 +85,22 @@ public class ImageGenerator {
      * @return the image generator instance with the added layer
      */
     public ImageGenerator addLayer(Layer layer) {
-        this.layers.add(layer);
+        this.layerPipeline.addLayer(layer);
+        return this;
+    }
+
+    /**
+     * Forces cache invalidation when generating images.
+     * <p>
+     * Forcing cache invalidation re-runs every layer even if the previous layers hae not changed.
+     * This ensures a fresh image is always generated, but the generation times can be longer in case of
+     * expensive computations.
+     *
+     * @param forcedCacheInvalidation whether the cache should be forcefully invalidated
+     * @return the image generator
+     */
+    public ImageGenerator setForcedCacheInvalidation(boolean forcedCacheInvalidation) {
+        this.forcedCacheInvalidation = forcedCacheInvalidation;
         return this;
     }
 
@@ -140,13 +155,12 @@ public class ImageGenerator {
      * @throws ImageGenerationException if there are errors during image generation
      */
     public ImageGenerator build() throws ImageGenerationException {
-        if (this.layers.isEmpty()) {
+        if (this.layerPipeline.isEmpty()) {
             throw new ImageGenerationException("No layer has been added");
         }
 
-        for (Layer layer : this.layers) {
-            this.processedImage = layer.apply(this.processedImage);
-        }
+        this.layerPipeline.setForceCacheInvalidation(this.forcedCacheInvalidation);
+        this.processedImage = this.layerPipeline.apply(this.processedImage);
         return this;
     }
 
