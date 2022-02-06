@@ -19,7 +19,7 @@ class ImageLayerTests {
 
         ImageLayer imageLayer = new ImageLayer();
         Path imagePath = Paths.get("src/test/resources/common", "landscape_640_400.jpg");
-        imageLayer.setImageFile(imagePath.toFile());
+        imageLayer.setImage(imagePath.toFile());
 
         generator.addLayer(imageLayer);
         BufferedImage generatedImage = generator.build().toImage();
@@ -42,13 +42,13 @@ class ImageLayerTests {
         // Add first image
         ImageLayer imageLayer = new ImageLayer();
         Path imagePath = Paths.get("src/test/resources/common", "landscape_640_400.jpg");
-        imageLayer.setImageFile(imagePath.toFile());
+        imageLayer.setImage(imagePath.toFile());
         generator.addLayer(imageLayer);
 
         // Add second image
         ImageLayer secondImageLayer = new ImageLayer();
         Path secondImagePath = Paths.get("src/test/resources/common", "trollface.png");
-        secondImageLayer.setImageFile(secondImagePath.toFile());
+        secondImageLayer.setImage(secondImagePath.toFile());
         generator.addLayer(secondImageLayer);
 
         BufferedImage generatedImage = generator.build().toImage();
@@ -67,13 +67,13 @@ class ImageLayerTests {
         // Add first image
         ImageLayer imageLayer = new ImageLayer();
         Path imagePath = Paths.get("src/test/resources/common", "landscape_640_400.jpg");
-        imageLayer.setImageFile(imagePath.toFile());
+        imageLayer.setImage(imagePath.toFile());
         generator.addLayer(imageLayer);
 
         // Add second image
         ImageLayer secondImageLayer = new ImageLayer();
         Path secondImagePath = Paths.get("src/test/resources/common", "trollface.png");
-        secondImageLayer.setImageFile(secondImagePath.toFile());
+        secondImageLayer.setImage(secondImagePath.toFile());
 
         PositionOptions positionOptions = new PositionOptions();
         positionOptions.setAnchor(PositionOptions.Anchor.MID_CENTER);
@@ -99,13 +99,13 @@ class ImageLayerTests {
         // Add first image
         ImageLayer imageLayer = new ImageLayer();
         Path imagePath = Paths.get("src/test/resources/common", "landscape_640_400.jpg");
-        imageLayer.setImageFile(imagePath.toFile());
+        imageLayer.setImage(imagePath.toFile());
         generator.addLayer(imageLayer);
 
         // Add second image
         ImageLayer secondImageLayer = new ImageLayer();
         Path secondImagePath = Paths.get("src/test/resources/common", "trollface.png");
-        secondImageLayer.setImageFile(secondImagePath.toFile());
+        secondImageLayer.setImage(secondImagePath.toFile());
 
         PositionOptions positionOptions = new PositionOptions();
         positionOptions.setAnchor(PositionOptions.Anchor.MID_CENTER);
@@ -131,13 +131,13 @@ class ImageLayerTests {
         // Add first image
         ImageLayer imageLayer = new ImageLayer();
         Path imagePath = Paths.get("src/test/resources/common", "landscape_640_400.jpg");
-        imageLayer.setImageFile(imagePath.toFile());
+        imageLayer.setImage(imagePath.toFile());
         generator.addLayer(imageLayer);
 
         // Add second image
         ImageLayer secondImageLayer = new ImageLayer();
         Path secondImagePath = Paths.get("src/test/resources/common", "trollface.png");
-        secondImageLayer.setImageFile(secondImagePath.toFile());
+        secondImageLayer.setImage(secondImagePath.toFile());
 
         PositionOptions positionOptions = new PositionOptions();
         positionOptions.setAnchor(PositionOptions.Anchor.MID_CENTER);
@@ -167,13 +167,13 @@ class ImageLayerTests {
         // Add first image
         ImageLayer imageLayer = new ImageLayer();
         Path imagePath = Paths.get("src/test/resources/common", "landscape_640_400.jpg");
-        imageLayer.setImageFile(imagePath.toFile());
+        imageLayer.setImage(imagePath.toFile());
         generator.addLayer(imageLayer);
 
         // Add second image
         ImageLayer secondImageLayer = new ImageLayer();
         Path secondImagePath = Paths.get("src/test/resources/common", "trollface.png");
-        secondImageLayer.setImageFile(secondImagePath.toFile());
+        secondImageLayer.setImage(secondImagePath.toFile());
 
         PositionOptions positionOptions = new PositionOptions();
         positionOptions.setAnchor(PositionOptions.Anchor.MID_CENTER);

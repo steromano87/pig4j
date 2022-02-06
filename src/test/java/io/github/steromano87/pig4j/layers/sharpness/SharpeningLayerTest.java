@@ -17,7 +17,7 @@ class SharpeningLayerTest {
         ImageGenerator generator = new ImageGenerator(640, 400);
         ImageLayer imageLayer = new ImageLayer();
         Path imagePath = Paths.get("src/test/resources/common", "landscape_640_400.jpg");
-        imageLayer.setImageFile(imagePath.toFile());
+        imageLayer.setImage(imagePath.toFile());
         generator.addLayer(imageLayer);
 
         SharpeningLayer sharpeningLayer = new SharpeningLayer();

@@ -38,7 +38,7 @@ public class ImageLayer implements Layer {
      * @param imageFile the image file
      * @return the layer
      */
-    public ImageLayer setImageFile(File imageFile) {
+    public ImageLayer setImage(File imageFile) {
         this.imageFile = imageFile;
         try {
             this.sourceImage = ImageIO.read(imageFile);
@@ -55,7 +55,7 @@ public class ImageLayer implements Layer {
      * @param imageUrl the source URL of the image
      * @return the layer
      */
-    public ImageLayer setImageUrl(URL imageUrl) {
+    public ImageLayer setImage(URL imageUrl) {
         this.imageUrl = imageUrl;
         try {
             this.sourceImage = ImageIO.read(imageUrl);
@@ -72,7 +72,7 @@ public class ImageLayer implements Layer {
      * @param imageBase64 the Base64 encoding of the image
      * @return the layer
      */
-    public ImageLayer setImageBase64(String imageBase64) {
+    public ImageLayer setImage(String imageBase64) {
         this.imageBase64 = imageBase64;
         try {
             byte[] imageBytes = Base64.getDecoder().decode(imageBase64);
@@ -91,7 +91,7 @@ public class ImageLayer implements Layer {
      * @param sourceImage the input image
      * @return the layer
      */
-    public ImageLayer setSourceImage(BufferedImage sourceImage) {
+    public ImageLayer setImage(BufferedImage sourceImage) {
         this.sourceImage = sourceImage;
         return this;
     }
@@ -179,6 +179,35 @@ public class ImageLayer implements Layer {
                 this.rotationOptions,
                 this.positionOptions,
                 this.blendingOptions
+        );
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ImageLayer that = (ImageLayer) o;
+        return Objects.equals(sourceImage, that.sourceImage)
+                && Objects.equals(imageFile, that.imageFile)
+                && Objects.equals(imageUrl, that.imageUrl)
+                && Objects.equals(imageBase64, that.imageBase64)
+                && getScalingOptions().equals(that.getScalingOptions())
+                && getRotationOptions().equals(that.getRotationOptions())
+                && getPositionOptions().equals(that.getPositionOptions())
+                && getBlendingOptions().equals(that.getBlendingOptions());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(
+                sourceImage,
+                imageFile,
+                imageUrl,
+                imageBase64,
+                getScalingOptions(),
+                getRotationOptions(),
+                getPositionOptions(),
+                getBlendingOptions()
         );
     }
 
