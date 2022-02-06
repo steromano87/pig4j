@@ -1,5 +1,7 @@
 package io.github.steromano87.pig4j.options;
 
+import lombok.EqualsAndHashCode;
+
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -9,6 +11,7 @@ import java.awt.image.BufferedImage;
  * <p>
  * Rotations are always applied to the center of an image.
  */
+@EqualsAndHashCode
 public class RotationOptions {
     private double angle = 0.0;
     private boolean autoResizeCanvas = true;

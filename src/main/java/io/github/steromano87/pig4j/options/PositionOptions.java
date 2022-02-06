@@ -1,5 +1,8 @@
 package io.github.steromano87.pig4j.options;
 
+import lombok.EqualsAndHashCode;
+import lombok.Setter;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;

@@ -4,6 +4,7 @@ import io.github.steromano87.pig4j.exceptions.ImageGenerationException;
 import io.github.steromano87.pig4j.exceptions.ImageWritingException;
 import io.github.steromano87.pig4j.layers.Layer;
 import io.github.steromano87.pig4j.layers.LayerPipeline;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,6 +13,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Base64;
 import java.util.Objects;
 
@@ -23,11 +26,14 @@ import java.util.Objects;
  *
  * @see Layer
  */
+@Slf4j
 public class ImageGenerator {
     private BufferedImage processedImage;
     private boolean forcedCacheInvalidation = false;
 
     private final LayerPipeline layerPipeline = new LayerPipeline();
+    private Integer lastProcessedPipelineHash;
+
     private final int canvasWidth;
     private final int canvasHeight;
 
@@ -160,7 +166,12 @@ public class ImageGenerator {
         }
 
         this.layerPipeline.setForceCacheInvalidation(this.forcedCacheInvalidation);
+        log.info("Image build start (forced cache invalidation set to {})", this.forcedCacheInvalidation);
+        Instant start = Instant.now();
         this.processedImage = this.layerPipeline.apply(this.processedImage);
+        Instant end = Instant.now();
+        log.info("Image build completed in {} ms", Duration.between(start, end).toMillis());
+        this.lastProcessedPipelineHash = this.layerPipeline.hashCode();
         return this;
     }
 
@@ -239,16 +250,17 @@ public class ImageGenerator {
     }
 
     private BufferedImage safelyGetProcessedImage() throws ImageGenerationException {
-        if (Objects.isNull(this.processedImage)) {
-            throw new ImageGenerationException(
-                    "No image was processed. " +
-                            "Ensure that at least one layer is set " +
-                            "and that the build() method has been executed at least once " +
-                            "before accessing the processed image"
-            );
+        if (Objects.isNull(this.lastProcessedPipelineHash)) {
+            log.warn("Layers have not been processed yet, forcing image build");
+            this.build();
         }
 
-        return this.processedImage;
+        if (this.layerPipeline.hashCode() != this.lastProcessedPipelineHash) {
+            log.warn("Layers have been changed, re-running image generation");
+            this.build();
+        }
+
+        return this.layerPipeline.getGeneratedImage();
     }
 
     private void fillWithBackgroundColor(Color color) {

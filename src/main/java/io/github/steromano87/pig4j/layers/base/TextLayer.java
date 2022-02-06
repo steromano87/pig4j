@@ -5,13 +5,14 @@ import io.github.steromano87.pig4j.options.BlendingOptions;
 import io.github.steromano87.pig4j.options.PositionOptions;
 import io.github.steromano87.pig4j.options.RotationOptions;
 import io.github.steromano87.pig4j.options.ScalingOptions;
+import lombok.EqualsAndHashCode;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.Objects;
 
+@EqualsAndHashCode
 public class TextLayer implements Layer {
     private String text = "";
     private String fontName = "Serif";
@@ -133,37 +134,6 @@ public class TextLayer implements Layer {
                 this.rotationOptions,
                 this.positionOptions,
                 this.blendingOptions
-        );
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TextLayer textLayer = (TextLayer) o;
-        return getText().equals(textLayer.getText())
-                && getFontName().equals(textLayer.getFontName())
-                && getFontSize().equals(textLayer.getFontSize())
-                && getFontType().equals(textLayer.getFontType())
-                && getColor().equals(textLayer.getColor())
-                && getScalingOptions().equals(textLayer.getScalingOptions())
-                && getRotationOptions().equals(textLayer.getRotationOptions())
-                && getPositionOptions().equals(textLayer.getPositionOptions())
-                && getBlendingOptions().equals(textLayer.getBlendingOptions());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(
-                getText(),
-                getFontName(),
-                getFontSize(),
-                getFontType(),
-                getColor(),
-                getScalingOptions(),
-                getRotationOptions(),
-                getPositionOptions(),
-                getBlendingOptions()
         );
     }
 }

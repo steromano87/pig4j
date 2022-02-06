@@ -2,10 +2,11 @@ package io.github.steromano87.pig4j.layers.transform;
 
 import io.github.steromano87.pig4j.layers.Layer;
 import io.github.steromano87.pig4j.options.ScalingOptions;
+import lombok.EqualsAndHashCode;
 
 import java.awt.image.BufferedImage;
 
-
+@EqualsAndHashCode
 public class ScalingLayer implements Layer {
     private final ScalingOptions scalingOptions = new ScalingOptions();
 

@@ -1,5 +1,7 @@
 package io.github.steromano87.pig4j.options;
 
+import lombok.EqualsAndHashCode;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ import java.util.Objects;
  * <p>
  * The option defines how an image with an arbitrary size is fitted on an existing canvas.
  */
+@EqualsAndHashCode
 public class ScalingOptions {
     private Integer width;
     private Integer height;

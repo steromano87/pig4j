@@ -2,11 +2,13 @@ package io.github.steromano87.pig4j.layers.base;
 
 import io.github.steromano87.pig4j.layers.Layer;
 import io.github.steromano87.pig4j.options.BlendingOptions;
+import lombok.EqualsAndHashCode;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
+@EqualsAndHashCode
 public class SingleColorLayer implements Layer {
     private Color color;
 
@@ -39,18 +41,5 @@ public class SingleColorLayer implements Layer {
 
         // Apply fusion options
         return this.blendingOptions.blend(outputImage, image);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SingleColorLayer that = (SingleColorLayer) o;
-        return Objects.equals(color, that.color) && blendingOptions.equals(that.blendingOptions);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(color, blendingOptions);
     }
 }

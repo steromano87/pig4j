@@ -2,28 +2,22 @@ package io.github.steromano87.pig4j.options;
 
 
 import io.github.steromano87.pig4j.exceptions.ImageGenerationException;
+import lombok.EqualsAndHashCode;
+import lombok.Setter;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.Objects;
 
 /**
  * Class that holds options used to blend two images together.
  */
+@EqualsAndHashCode
 public class BlendingOptions {
+    @Setter
     private float alpha = 1.0f;
 
+    @Setter
     private Method method = Method.NORMAL;
-
-    public BlendingOptions setAlpha(float alpha) {
-        this.alpha = alpha;
-        return this;
-    }
-
-    public BlendingOptions setMethod(Method method) {
-        this.method = method;
-        return this;
-    }
 
     /**
      * Blends two images together
@@ -58,20 +52,6 @@ public class BlendingOptions {
         graphics2D.dispose();
 
         return outputImage;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BlendingOptions that = (BlendingOptions) o;
-        return Float.compare(that.alpha, alpha) == 0 &&
-                method == that.method;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(alpha, method);
     }
 
     /**

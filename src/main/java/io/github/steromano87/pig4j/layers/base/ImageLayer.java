@@ -6,6 +6,8 @@ import io.github.steromano87.pig4j.options.BlendingOptions;
 import io.github.steromano87.pig4j.options.PositionOptions;
 import io.github.steromano87.pig4j.options.RotationOptions;
 import io.github.steromano87.pig4j.options.ScalingOptions;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -20,6 +22,8 @@ import java.util.stream.Stream;
 /**
  * Layers that adds an image on top of the existing stack.
  */
+@EqualsAndHashCode
+@ToString
 public class ImageLayer implements Layer {
     private BufferedImage sourceImage;
 
@@ -179,35 +183,6 @@ public class ImageLayer implements Layer {
                 this.rotationOptions,
                 this.positionOptions,
                 this.blendingOptions
-        );
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ImageLayer that = (ImageLayer) o;
-        return Objects.equals(sourceImage, that.sourceImage)
-                && Objects.equals(imageFile, that.imageFile)
-                && Objects.equals(imageUrl, that.imageUrl)
-                && Objects.equals(imageBase64, that.imageBase64)
-                && getScalingOptions().equals(that.getScalingOptions())
-                && getRotationOptions().equals(that.getRotationOptions())
-                && getPositionOptions().equals(that.getPositionOptions())
-                && getBlendingOptions().equals(that.getBlendingOptions());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(
-                sourceImage,
-                imageFile,
-                imageUrl,
-                imageBase64,
-                getScalingOptions(),
-                getRotationOptions(),
-                getPositionOptions(),
-                getBlendingOptions()
         );
     }
 

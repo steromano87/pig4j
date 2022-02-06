@@ -5,13 +5,13 @@ import io.github.steromano87.pig4j.options.BlendingOptions;
 import io.github.steromano87.pig4j.options.PositionOptions;
 import io.github.steromano87.pig4j.options.RotationOptions;
 import io.github.steromano87.pig4j.options.ScalingOptions;
+import lombok.EqualsAndHashCode;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-
+@EqualsAndHashCode
 public class LayerGroup implements Layer {
     private List<Layer> layers = new ArrayList<>();
 
@@ -81,29 +81,6 @@ public class LayerGroup implements Layer {
                 this.rotationOptions,
                 this.positionOptions,
                 this.blendingOptions
-        );
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        LayerGroup that = (LayerGroup) o;
-        return layers.equals(that.layers)
-                && getScalingOptions().equals(that.getScalingOptions())
-                && getRotationOptions().equals(that.getRotationOptions())
-                && getPositionOptions().equals(that.getPositionOptions())
-                && getBlendingOptions().equals(that.getBlendingOptions());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(
-                layers,
-                getScalingOptions(),
-                getRotationOptions(),
-                getPositionOptions(),
-                getBlendingOptions()
         );
     }
 }
