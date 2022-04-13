@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Objects;
 
 @Slf4j
-@EqualsAndHashCode
 public class LayerPipeline {
     private final List<Entry> entries = new ArrayList<>();
     private boolean forceCacheInvalidation = false;
@@ -56,6 +55,25 @@ public class LayerPipeline {
         return this.entries.isEmpty();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LayerPipeline pipeline = (LayerPipeline) o;
+
+        if (forceCacheInvalidation != pipeline.forceCacheInvalidation) return false;
+        return entries.equals(pipeline.entries);
+    }
+
+    @Override
+    public int hashCode() {
+        return entries.stream()
+                .map(Object::hashCode)
+                .reduce(Integer::sum)
+                .orElse(0);
+    }
+
     @ToString
     public static class Entry {
         private final Layer layer;
@@ -79,6 +97,21 @@ public class LayerPipeline {
 
         public boolean isCacheInvalid() {
             return Objects.isNull(this.cachedImage) || this.layer.hashCode() != this.cachedHash;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+
+            Entry entry = (Entry) o;
+
+            return layer.equals(entry.layer);
+        }
+
+        @Override
+        public int hashCode() {
+            return layer.hashCode();
         }
     }
 }
