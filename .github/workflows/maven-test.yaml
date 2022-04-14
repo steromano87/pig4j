@@ -31,7 +31,7 @@ jobs:
         uses: madrapps/jacoco-report@v1.2
         if: always() # always run even if the previous step fails
         with:
-          paths: "**/jacoco.xml"
+          paths: "${{ github.workspace }}/pig4j-core/target/site/jacoco/jacoco.xml,${{ github.workspace }}/pig4j-base-layers/target/site/jacoco/jacoco.xml"
           token: ${{ secrets.GITHUB_TOKEN }}
           min-coverage-overall: 40
           min-coverage-changed-files: 60
