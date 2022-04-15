@@ -41,6 +41,7 @@ jobs:
         if: always() # always run even if the previous step fails
         with:
           report_paths: "**/target/**/TEST-*.xml"
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: JaCoCo coverage
         uses: madrapps/jacoco-report@v1.2
