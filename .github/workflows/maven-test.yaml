@@ -14,7 +14,8 @@ jobs:
     name: Build and analyze
     runs-on: ubuntu-latest
     permissions:
-      actions: write
+      actions: read
+      checks: write
       contents: read
       security-events: write
 
