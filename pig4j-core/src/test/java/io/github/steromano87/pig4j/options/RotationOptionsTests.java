@@ -6,14 +6,16 @@ import org.junit.jupiter.api.Test;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.util.Objects;
 
 class RotationOptionsTests {
     @Test
     void testNoOpZeroDegreesRotation() throws IOException {
         RotationOptions rotationOptions = new RotationOptions();
         BufferedImage inputImage = ImageIO.read(
-                Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
+                Objects.requireNonNull(
+                        this.getClass().getClassLoader().getResourceAsStream("common/landscape_640_400.jpg")
+                )
         );
 
         BufferedImage outputImage = rotationOptions.rotate(inputImage);
@@ -28,7 +30,9 @@ class RotationOptionsTests {
     void testNoOp360DegreesRotation() throws IOException {
         RotationOptions rotationOptions = new RotationOptions();
         BufferedImage inputImage = ImageIO.read(
-                Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
+                Objects.requireNonNull(
+                        this.getClass().getClassLoader().getResourceAsStream("common/landscape_640_400.jpg")
+                )
         );
 
         rotationOptions.setAngle(360);
@@ -44,7 +48,9 @@ class RotationOptionsTests {
     void testRotationWithNoAutoResize() throws IOException {
         RotationOptions rotationOptions = new RotationOptions();
         BufferedImage inputImage = ImageIO.read(
-                Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
+                Objects.requireNonNull(
+                        this.getClass().getClassLoader().getResourceAsStream("common/landscape_640_400.jpg")
+                )
         );
         rotationOptions.setAngle(30);
         rotationOptions.setAutoResizeCanvas(false);
@@ -61,7 +67,9 @@ class RotationOptionsTests {
     void testRotationWithAutoResize() throws IOException {
         RotationOptions rotationOptions = new RotationOptions();
         BufferedImage inputImage = ImageIO.read(
-                Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
+                Objects.requireNonNull(
+                        this.getClass().getClassLoader().getResourceAsStream("common/landscape_640_400.jpg")
+                )
         );
         rotationOptions.setAngle(30);
         rotationOptions.setAutoResizeCanvas(true);
@@ -89,7 +97,9 @@ class RotationOptionsTests {
     void testRotationWithNegativeAngles() throws IOException {
         RotationOptions rotationOptions = new RotationOptions();
         BufferedImage inputImage = ImageIO.read(
-                Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
+                Objects.requireNonNull(
+                        this.getClass().getClassLoader().getResourceAsStream("common/landscape_640_400.jpg")
+                )
         );
         rotationOptions.setAngle(-30);
         rotationOptions.setAutoResizeCanvas(true);

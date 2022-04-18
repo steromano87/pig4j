@@ -6,14 +6,16 @@ import org.junit.jupiter.api.Test;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.util.Objects;
 
 class PositionOptionsTests {
     @Test
     void testNoOpTranslation() throws IOException {
         PositionOptions positionOptions = new PositionOptions();
         BufferedImage inputImage = ImageIO.read(
-                Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
+                Objects.requireNonNull(
+                        this.getClass().getClassLoader().getResourceAsStream("common/landscape_640_400.jpg")
+                )
         );
 
         BufferedImage outputImage = positionOptions.translate(inputImage);
@@ -28,7 +30,9 @@ class PositionOptionsTests {
     void testTranslationWithNoAutoResize() throws IOException {
         PositionOptions positionOptions = new PositionOptions();
         BufferedImage inputImage = ImageIO.read(
-                Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
+                Objects.requireNonNull(
+                        this.getClass().getClassLoader().getResourceAsStream("common/landscape_640_400.jpg")
+                )
         );
         positionOptions.setAutoResizeCanvas(false);
         positionOptions.setX(200);
@@ -46,7 +50,9 @@ class PositionOptionsTests {
     void testTranslationWithAutoResize() throws IOException {
         PositionOptions positionOptions = new PositionOptions();
         BufferedImage inputImage = ImageIO.read(
-                Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
+                Objects.requireNonNull(
+                        this.getClass().getClassLoader().getResourceAsStream("common/landscape_640_400.jpg")
+                )
         );
         positionOptions.setAutoResizeCanvas(true);
         positionOptions.setX(200);

@@ -6,14 +6,16 @@ import org.junit.jupiter.api.Test;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.file.Paths;
+import java.util.Objects;
 
 class ScalingOptionsTests {
     @Test
     void testNoOpScaling() throws IOException {
         ScalingOptions scalingOptions = new ScalingOptions();
         BufferedImage inputImage = ImageIO.read(
-                Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
+                Objects.requireNonNull(
+                        this.getClass().getClassLoader().getResourceAsStream("common/landscape_640_400.jpg")
+                )
         );
 
         BufferedImage outputImage = scalingOptions.scale(inputImage);
@@ -28,7 +30,9 @@ class ScalingOptionsTests {
     void testEnlargementWithAutoAlgorithmScaling() throws IOException {
         ScalingOptions scalingOptions = new ScalingOptions();
         BufferedImage inputImage = ImageIO.read(
-                Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
+                Objects.requireNonNull(
+                        this.getClass().getClassLoader().getResourceAsStream("common/landscape_640_400.jpg")
+                )
         );
 
         scalingOptions.setScalingAlgorithm(ScalingOptions.Algorithm.AUTO);
@@ -46,7 +50,9 @@ class ScalingOptionsTests {
     void testShrinkingWithAutoAlgorithmScaling() throws IOException {
         ScalingOptions scalingOptions = new ScalingOptions();
         BufferedImage inputImage = ImageIO.read(
-                Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
+                Objects.requireNonNull(
+                        this.getClass().getClassLoader().getResourceAsStream("common/landscape_640_400.jpg")
+                )
         );
 
         scalingOptions.setScalingAlgorithm(ScalingOptions.Algorithm.AUTO);
@@ -64,7 +70,9 @@ class ScalingOptionsTests {
     void testNonUniformScaling() throws IOException {
         ScalingOptions scalingOptions = new ScalingOptions();
         BufferedImage inputImage = ImageIO.read(
-                Paths.get("src/test/resources/common", "landscape_640_400.jpg").toFile()
+                Objects.requireNonNull(
+                        this.getClass().getClassLoader().getResourceAsStream("common/landscape_640_400.jpg")
+                )
         );
 
         scalingOptions.setUniformScaling(false);
