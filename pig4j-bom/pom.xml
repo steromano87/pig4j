@@ -63,6 +63,14 @@
                 <scope>test</scope>
             </dependency>
 
+            <!-- Used only for standalone test execution with IntelliJ or other IDEs -->
+            <dependency>
+                <groupId>org.junit.vintage</groupId>
+                <artifactId>junit-vintage-engine</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
                 <artifactId>log4j-slf4j-impl</artifactId>
