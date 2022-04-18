@@ -1,13 +1,9 @@
 package io.github.steromano87.pig4j;
 
-
-import io.github.steromano87.pig4j.NoOpLayer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.time.Duration;
-import java.time.Instant;
 
 class LayerPipelineTests {
     @Test
