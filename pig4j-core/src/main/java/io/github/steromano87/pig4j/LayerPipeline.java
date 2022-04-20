@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Slf4j
-public class LayerPipeline {
+public class LayerPipeline implements Layer {
     private final List<Entry> entries = new ArrayList<>();
     private boolean forceCacheInvalidation = false;
 
@@ -22,6 +22,7 @@ public class LayerPipeline {
         this.forceCacheInvalidation = cacheInvalidation;
     }
 
+    @Override
     public BufferedImage apply(BufferedImage initialImage) {
         log.debug("Layer pipeline processing start (pipeline size: {})", this.entries.size());
         boolean localCacheInvalidation = false;
