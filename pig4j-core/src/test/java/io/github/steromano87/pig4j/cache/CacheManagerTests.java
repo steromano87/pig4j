@@ -42,8 +42,9 @@ class CacheManagerTests {
         CacheManager cacheManager = new CacheManager();
         cacheManager.refreshConfigurationHash(0);
         cacheManager.refreshInputImageHash(firstInputImage);
+        cacheManager.setCachedImage(firstInputImage);
 
-        Assertions.assertFalse(cacheManager.isCachedImageInvalid(0, firstInputImage));
+        Assertions.assertTrue(cacheManager.isCachedImageValid(0, firstInputImage));
     }
 
     @Test
@@ -51,8 +52,9 @@ class CacheManagerTests {
         CacheManager cacheManager = new CacheManager();
         cacheManager.refreshConfigurationHash(0);
         cacheManager.refreshInputImageHash(firstInputImage);
+        cacheManager.setCachedImage(firstInputImage);
 
-        Assertions.assertFalse(cacheManager.isCachedImageInvalid(0, copyOfFirstInputImage));
+        Assertions.assertTrue(cacheManager.isCachedImageValid(0, copyOfFirstInputImage));
     }
 
     @Test
@@ -60,8 +62,9 @@ class CacheManagerTests {
         CacheManager cacheManager = new CacheManager();
         cacheManager.refreshConfigurationHash(0);
         cacheManager.refreshInputImageHash(firstInputImage);
+        cacheManager.setCachedImage(firstInputImage);
 
-        Assertions.assertTrue(cacheManager.isCachedImageInvalid(1, firstInputImage));
+        Assertions.assertFalse(cacheManager.isCachedImageValid(1, firstInputImage));
     }
 
     @Test
@@ -69,23 +72,35 @@ class CacheManagerTests {
         CacheManager cacheManager = new CacheManager();
         cacheManager.refreshConfigurationHash(0);
         cacheManager.refreshInputImageHash(firstInputImage);
+        cacheManager.setCachedImage(firstInputImage);
 
-        Assertions.assertTrue(cacheManager.isCachedImageInvalid(0, secondInputImage));
+        Assertions.assertFalse(cacheManager.isCachedImageValid(0, secondInputImage));
     }
 
     @Test
-    void testCacheIsInvalidIfNoImageIsCached() {
+    void testCacheIsInvalidIfNoInputImageIsCached() {
         CacheManager cacheManager = new CacheManager();
         cacheManager.refreshConfigurationHash(0);
+        cacheManager.setCachedImage(firstInputImage);
 
-        Assertions.assertTrue(cacheManager.isCachedImageInvalid(0, secondInputImage));
+        Assertions.assertFalse(cacheManager.isCachedImageValid(0, secondInputImage));
     }
 
     @Test
     void testCacheIsInvalidIfNoConfigurationIsCached() {
         CacheManager cacheManager = new CacheManager();
         cacheManager.refreshInputImageHash(firstInputImage);
+        cacheManager.setCachedImage(firstInputImage);
 
-        Assertions.assertTrue(cacheManager.isCachedImageInvalid(0, secondInputImage));
+        Assertions.assertFalse(cacheManager.isCachedImageValid(0, secondInputImage));
+    }
+
+    @Test
+    void testCacheIsInvalidIfNoProcessedImageIsCached() {
+        CacheManager cacheManager = new CacheManager();
+        cacheManager.refreshConfigurationHash(0);
+        cacheManager.refreshInputImageHash(firstInputImage);
+
+        Assertions.assertFalse(cacheManager.isCachedImageValid(0, firstInputImage));
     }
 }

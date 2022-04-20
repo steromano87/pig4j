@@ -1,21 +1,27 @@
 package io.github.steromano87.pig4j;
 
-import lombok.ToString;
+import io.github.steromano87.pig4j.cache.CacheManager;
+import io.github.steromano87.pig4j.cache.Cacheable;
+import lombok.EqualsAndHashCode;
 import lombok.extern.slf4j.Slf4j;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class LayerPipeline implements Layer {
-    private final List<Entry> entries = new ArrayList<>();
+    @EqualsAndHashCode.Include
+    private final List<Layer> layers = new ArrayList<>();
+
+    @EqualsAndHashCode.Include
     private boolean forceCacheInvalidation = false;
 
+    private final CacheManager cacheManager = new CacheManager();
+
     public void addLayer(Layer layer) {
-        Entry layerEntry = new Entry(layer);
-        this.entries.add(layerEntry);
+        this.layers.add(layer);
     }
 
     public void setForceCacheInvalidation(boolean cacheInvalidation) {
@@ -24,94 +30,41 @@ public class LayerPipeline implements Layer {
 
     @Override
     public BufferedImage apply(BufferedImage initialImage) {
-        log.debug("Layer pipeline processing start (pipeline size: {})", this.entries.size());
-        boolean localCacheInvalidation = false;
+        if (!this.forceCacheInvalidation && this.cacheManager.isCachedImageValid(this.hashCode(), initialImage)) {
+            log.debug("Cache is still valid, using cached image");
+            return this.cacheManager.getCachedImage();
+        }
+
+        log.debug("Layer pipeline processing start (pipeline size: {})", this.layers.size());
         BufferedImage intermediateImage = initialImage;
 
-        for (Entry entry : this.entries) {
-            log.debug("Working on entry [{}]", entry);
-            if (entry.isCacheInvalid() || this.forceCacheInvalidation) {
-                localCacheInvalidation = true;
-            }
+        for (Layer layer : this.layers) {
+            log.debug("Working on layer [{}]", layer);
 
-            if (localCacheInvalidation) {
-                log.debug("Entry cache is marked as invalid, forcing layer application");
-                intermediateImage = entry.apply(intermediateImage);
-            } else {
+            if (!this.forceCacheInvalidation &&
+                    Cacheable.class.isAssignableFrom(layer.getClass()) &&
+                    ((Cacheable) layer).isCachedImageValid(intermediateImage)) {
                 log.debug("Entry cache is valid, using cached image");
-                intermediateImage = entry.getCachedImage();
+                intermediateImage = ((Cacheable) layer).getCachedImage();
+            } else {
+                log.debug("Applying layer");
+                intermediateImage = layer.apply(intermediateImage);
             }
         }
 
         log.debug("Layer pipeline execution ended");
-        return this.getGeneratedImage();
+        this.cacheManager.refreshInputImageHash(initialImage);
+        this.cacheManager.refreshConfigurationHash(this.hashCode());
+        this.cacheManager.setCachedImage(intermediateImage);
+
+        return this.cacheManager.getCachedImage();
     }
 
     public BufferedImage getGeneratedImage() {
-        return this.entries.get(this.entries.size() - 1).getCachedImage();
+        return this.cacheManager.getCachedImage();
     }
 
     public boolean isEmpty() {
-        return this.entries.isEmpty();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        LayerPipeline pipeline = (LayerPipeline) o;
-
-        if (forceCacheInvalidation != pipeline.forceCacheInvalidation) return false;
-        return entries.equals(pipeline.entries);
-    }
-
-    @Override
-    public int hashCode() {
-        return entries.stream()
-                .map(Object::hashCode)
-                .reduce(Integer::sum)
-                .orElse(0);
-    }
-
-    @ToString
-    public static class Entry {
-        private final Layer layer;
-        private int cachedHash;
-        private BufferedImage cachedImage;
-
-        public Entry(Layer layer) {
-            this.layer = layer;
-            this.cachedHash = layer.hashCode();
-        }
-
-        public BufferedImage apply(BufferedImage inputImage) {
-            this.cachedHash = this.layer.hashCode();
-            this.cachedImage = this.layer.apply(inputImage);
-            return this.cachedImage;
-        }
-
-        public BufferedImage getCachedImage() {
-            return this.cachedImage;
-        }
-
-        public boolean isCacheInvalid() {
-            return Objects.isNull(this.cachedImage) || this.layer.hashCode() != this.cachedHash;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Entry entry = (Entry) o;
-
-            return layer.equals(entry.layer);
-        }
-
-        @Override
-        public int hashCode() {
-            return layer.hashCode();
-        }
+        return this.layers.isEmpty();
     }
 }

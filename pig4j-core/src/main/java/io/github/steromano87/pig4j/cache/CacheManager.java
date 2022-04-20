@@ -29,11 +29,12 @@ public class CacheManager {
         this.inputImageHash = calculateImageHash(inputImage);
     }
 
-    public boolean isCachedImageInvalid(int currentConfigurationHash, BufferedImage currentInputImage) {
-        return Objects.isNull(this.inputImageHash) ||
-                Objects.isNull(this.configurationHash) ||
-                currentConfigurationHash != this.configurationHash ||
-                !Arrays.equals(calculateImageHash(currentInputImage), this.inputImageHash);
+    public boolean isCachedImageValid(int currentConfigurationHash, BufferedImage currentInputImage) {
+        return Objects.nonNull(this.cachedImage) &&
+                Objects.nonNull(this.inputImageHash) &&
+                Objects.nonNull(this.configurationHash) &&
+                currentConfigurationHash == this.configurationHash &&
+                Arrays.equals(calculateImageHash(currentInputImage), this.inputImageHash);
     }
 
     private static byte[] calculateImageHash(BufferedImage image) throws Pig4jException {
